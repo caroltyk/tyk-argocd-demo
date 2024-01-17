@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk
+  namespace: argocd
+spec:
+  destination:
+    namespace: tyk
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  source:
+    chart: tyk-stack
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.0.0
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated: 
+      prune: false
