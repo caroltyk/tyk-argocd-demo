@@ -22,7 +22,5 @@ spec:
     automated: 
       prune: false
   ignoreDifferences:
-  - jsonPointers:
-    - /spec/volumeName
-    - /spec/storageClassName
-    kind: PersistentVolumeClaim
+  - kind: PersistentVolumeClaim
+    group: v1
