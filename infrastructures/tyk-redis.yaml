@@ -21,3 +21,8 @@ spec:
     - CreateNamespace=true
     automated: 
       prune: false
+  ignoreDifferences:
+  - jsonPointers:
+    - /spec/volumeName
+    - /spec/storageClassName
+    kind: PersistentVolumeClaim
