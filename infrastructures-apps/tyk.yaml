@@ -12,6 +12,10 @@ spec:
     chart: tyk-stack
     repoURL: https://helm.tyk.io/public/helm/charts
     targetRevision: 1.0.0
+    helm:
+      parameters:
+      - name: global.secrets.APISecret
+        value: BananaSplit42
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

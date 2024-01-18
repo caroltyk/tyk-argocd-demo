@@ -7,7 +7,7 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: infrastructures
+    path: infrastructures-apps
     repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
     targetRevision: HEAD
   project: infrastructure
