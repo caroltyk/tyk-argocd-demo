@@ -3,6 +3,7 @@ kind: Application
 metadata:
   name: ingress-nginx
   namespace: argocd
+  argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
     namespace: ingress-nginx

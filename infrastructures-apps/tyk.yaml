@@ -3,6 +3,7 @@ kind: Application
 metadata:
   name: tyk
   namespace: argocd
+  argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
     namespace: tyk
