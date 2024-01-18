@@ -15,8 +15,20 @@ spec:
     targetRevision: 1.0.0
     helm:
       parameters:
-      - name: global.secrets.APISecret
-        value: BananaSplit42
+      - name: global.adminUser.useSecretName
+        value: admin-secrets
+      - name: global.secrets.useSecretName
+        value: my-secrets
+      - name: global.redis.addrs
+        value: tyk-redis-master.tyk.svc:6379
+      - name: global.redis.passSecret.name
+        value: tyk-redis
+      - name: global.redis.passSecret.keyName
+        value: redis-password
+      - name: global.postgres.connectionStringSecret.name
+        value: postgres-secrets
+      - name: global.postgres.connectionStringSecret.keyName
+        value: postgresUrl
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
