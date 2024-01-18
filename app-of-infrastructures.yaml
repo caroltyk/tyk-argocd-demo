@@ -11,3 +11,7 @@ spec:
     repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
     targetRevision: HEAD
   project: infrastructure
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
