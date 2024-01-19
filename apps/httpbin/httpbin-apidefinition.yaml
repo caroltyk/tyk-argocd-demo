@@ -3,8 +3,8 @@ kind: ApiDefinition
 metadata:
   name: httpbin-api
 spec:
-  name: httpbin-keyless
-  use_keyless: true
+  name: httpbin-api
+  use_keyless: false
   protocol: http
   active: true
   proxy:
