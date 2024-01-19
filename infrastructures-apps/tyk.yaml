@@ -30,12 +30,18 @@ spec:
         value: postgres-secrets
       - name: global.postgres.connectionStringSecret.keyName
         value: postgresUrl
-      - name: tyk-gateway.gateway.service.type
-        value: LoadBalancer
-      - name: tyk-dashboard.dashboard.service.type
-        value: LoadBalancer
-      - name: tyk-dev-portal.service.type
-        value: LoadBalancer
+      - name: tyk-gateway.gateway.ingress.enabled
+        value: "true"
+      - name: tyk-gateway.gateway.ingress.className
+        value: nginx
+      - name: tyk-gateway.gateway.ingress.hosts[0].host
+        value: tyk-gw.org
+      - name: tyk-dashboard.dashboard.ingress.enabled
+        value: "true"
+      - name: tyk-dashboard.dashboard.ingress.className
+        value: nginx
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].host
+        value: tyk-dashboard.org
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
