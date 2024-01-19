@@ -30,6 +30,12 @@ spec:
         value: postgres-secrets
       - name: global.postgres.connectionStringSecret.keyName
         value: postgresUrl
+      - name: tyk-gateway.gateway.service.type
+        value: LoadBalancer
+      - name: tyk-dashboard.dashboard.service.type
+        value: LoadBalancer
+      - name: tyk-dev-portal.service.type
+        value: LoadBalancer
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
