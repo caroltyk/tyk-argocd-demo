@@ -1,0 +1,19 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: app-httpbin
+  annotations:
+    argocd.argoproj.io/sync-wave: "100"
+spec:
+  destination:
+    name: in-cluster
+    namespace: argocd
+  source:
+    path: apps/httpbin
+    repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
+    targetRevision: HEAD
+  project: app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
