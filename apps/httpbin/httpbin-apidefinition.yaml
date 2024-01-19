@@ -10,4 +10,4 @@ spec:
   proxy:
     target_url: http://httpbin.org
     listen_path: /httpbin
-    strip_listen_path: true
+    strip_listen_path: false
