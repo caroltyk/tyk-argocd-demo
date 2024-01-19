@@ -3,11 +3,11 @@ kind: ApiDefinition
 metadata:
   name: httpbin-api
 spec:
-  name: httpbin-api
+  name: httpbin-keyless
   use_keyless: true
   protocol: http
   active: true
   proxy:
     target_url: http://httpbin.org
-    listen_path: /
+    listen_path: /httpbin
     strip_listen_path: true
