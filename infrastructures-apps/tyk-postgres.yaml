@@ -18,6 +18,10 @@ spec:
       parameters:
       - name: auth.database
         value: "tyk_analytics"
+      - name: global.postgresql.auth.existingSecret
+        value: postgres-password
+      - name: global.postgresql.auth.secretKeys.adminPasswordKey
+        value: postgres-password
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
