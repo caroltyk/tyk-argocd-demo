@@ -36,12 +36,20 @@ spec:
         value: nginx
       - name: tyk-gateway.gateway.ingress.hosts[0].host
         value: tyk-gw.org
+      - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].path
+        value: /
+      - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].pathType
+        value: ImplementationSpecific
       - name: tyk-dashboard.dashboard.ingress.enabled
         value: "true"
       - name: tyk-dashboard.dashboard.ingress.className
         value: nginx
       - name: tyk-dashboard.dashboard.ingress.hosts[0].host
         value: tyk-dashboard.org
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].path
+        value: /
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].pathType
+        value: ImplementationSpecific
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
