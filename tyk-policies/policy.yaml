@@ -1,0 +1,24 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: restricted-rate-policy
+  namespace: tyk
+spec:
+  name: restricted rate policy
+  state: active
+  active: true
+  access_rights_array:
+    - name: httpbin-basic-auth
+      namespace: httpbin
+      versions:
+        - Default
+    - name: httpbin-transform
+      namespace: httpbin
+      versions:
+        - Default
+
+  # TODO: can we set sensible defaults for partitions?
+  partitions:
+    quota: true
+    rate_limit: true
+    acl: true
