@@ -4,6 +4,7 @@ apiVersion: v1
 kind: ServiceAccount
 metadata:
   name: hello-httpbin
+  namespace: httpbin
   labels:
     helm.sh/chart: httpbin-0.1.0
     app.kubernetes.io/name: httpbin
@@ -16,6 +17,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: hello-httpbin
+  namespace: httpbin
   labels:
     helm.sh/chart: httpbin-0.1.0
     app.kubernetes.io/name: httpbin
@@ -38,6 +40,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: hello-httpbin
+  namespace: httpbin
   labels:
     helm.sh/chart: httpbin-0.1.0
     app.kubernetes.io/name: httpbin
