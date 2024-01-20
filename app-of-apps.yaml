@@ -12,6 +12,9 @@ spec:
     path: apps
     repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
     targetRevision: HEAD
+    directory:
+      recurse: true
+      jsonnet: {}
   project: app
   syncPolicy:
     syncOptions:
