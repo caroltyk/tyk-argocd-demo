@@ -67,7 +67,7 @@ spec:
           securityContext:
             {}
           image: "caroltyk/fastapi-httpbin:latest"
-          imagePullPolicy: IfNotPresent
+          imagePullPolicy: Always
           ports:
             - name: http
               containerPort: 80
