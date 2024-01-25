@@ -6,7 +6,7 @@ metadata:
 spec:
   destinations:
   - name: '*'
-    namespace: '*'
+    namespace: 'httpbin'
     server: '*'
   sourceRepos:
   - '*'

@@ -9,6 +9,6 @@ spec:
   use_keyless: true
   active: true
   proxy:
-    target_url: http://httpbin.org
+    target_url: http://hello-httpbin.httpbin.svc:80
     listen_path: /httpbin-keyless
     strip_listen_path: false
