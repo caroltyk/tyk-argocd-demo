@@ -11,4 +11,4 @@ spec:
   proxy:
     target_url: http://hello-httpbin.httpbin.svc:80
     listen_path: /httpbin-keyless
-    strip_listen_path: false
+    strip_listen_path: true
