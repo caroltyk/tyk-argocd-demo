@@ -4,9 +4,11 @@ metadata:
   name: app
   namespace: argocd
 spec:
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
   destinations:
-  - name: '*'
-    namespace: 'httpbin'
+  - namespace: '*'
     server: '*'
   sourceRepos:
   - '*'
