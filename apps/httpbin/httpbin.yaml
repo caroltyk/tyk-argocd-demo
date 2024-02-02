@@ -57,7 +57,7 @@ spec:
       securityContext:
         {}
       containers:
-        - name: httpbin
+        - name: fastapi-httpbin
           securityContext:
             {}
           image: "caroltyk/fastapi-httpbin:latest"
