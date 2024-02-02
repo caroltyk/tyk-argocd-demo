@@ -10,7 +10,7 @@ spec:
     namespace: argocd
   source:
     path: infrastructures-apps
-    repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
+    repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
   project: infrastructure
   syncPolicy:

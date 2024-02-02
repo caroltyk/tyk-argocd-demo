@@ -10,7 +10,7 @@ spec:
     namespace: apis
   source:
     path: apps
-    repoURL: 'https://github.com/caroltyk/upgraded-parakeet.git'
+    repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
     directory:
       recurse: true
