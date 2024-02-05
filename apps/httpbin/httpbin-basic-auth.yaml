@@ -4,7 +4,6 @@ apiVersion: tyk.tyk.io/v1alpha1
 kind: ApiDefinition
 metadata:
   name: httpbin-basic-auth
-  namespace: httpbin
 spec:
   name: httpbin basic authentication
   protocol: http

@@ -2,7 +2,6 @@ apiVersion: tyk.tyk.io/v1alpha1
 kind: ApiDefinition
 metadata:
   name: httpbin-keyless
-  namespace: httpbin
 spec:
   name: httpbin keyless
   protocol: http

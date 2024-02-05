@@ -2,7 +2,6 @@ apiVersion: tyk.tyk.io/v1alpha1
 kind: ApiDefinition
 metadata:
   name: httpbin-transform
-  namespace: httpbin
 spec:
   name: httpbin transform
   protocol: http
