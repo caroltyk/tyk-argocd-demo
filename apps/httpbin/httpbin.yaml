@@ -60,7 +60,7 @@ spec:
         - name: fastapi-httpbin
           securityContext:
             {}
-          image: "caroltyk/fastapi-httpbin:20240201-1"
+          image: "caroltyk/fastapi-httpbin:v0.0.1"
           imagePullPolicy: IfNotPresent
           ports:
             - name: http
