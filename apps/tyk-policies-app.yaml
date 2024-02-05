@@ -1,22 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: all-apps
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "100"
+  name: tyk-policies-app
 spec:
   destination:
-    name: in-cluster
+    namespace: tyk
+    server: 'https://kubernetes.default.svc'
   source:
-    path: apps
+    path: apps/tyk-policies
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
+  sources: []
   project: app
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
