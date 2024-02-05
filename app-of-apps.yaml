@@ -9,6 +9,7 @@ metadata:
 spec:
   destination:
     name: in-cluster
+    namespace: argocd
   source:
     path: apps
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
