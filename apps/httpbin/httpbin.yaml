@@ -18,8 +18,7 @@ spec:
       protocol: TCP
       name: http
   selector:
-    app.kubernetes.io/name: fastapi-httpbin
-    app.kubernetes.io/instance: fastapi-httpbin
+    app: fastapi-httpbin
 ---
 # Source: httpbin/templates/deployment.yaml
 apiVersion: apps/v1
