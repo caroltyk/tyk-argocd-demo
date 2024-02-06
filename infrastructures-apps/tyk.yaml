@@ -52,6 +52,11 @@ spec:
         value: /
       - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].pathType
         value: ImplementationSpecific
+      - name: tyk-gateway.gateway.image.tag
+        value: v5.3.0-alpha12
+      - name: tyk-dashboard.dashboard.image.tag
+        value: v5.3.0-alpha12
+      
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
