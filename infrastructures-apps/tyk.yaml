@@ -56,6 +56,8 @@ spec:
         value: v5.3.0-rc5
       - name: tyk-dashboard.dashboard.image.tag
         value: v5.3.0-rc1
+      - name: tyk-pump.pump.image.tag
+        value: v1.9.0-rc1
       
   syncPolicy:
     syncOptions:
