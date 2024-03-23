@@ -14,6 +14,10 @@ spec:
     chart: ingress-nginx
     repoURL: https://kubernetes.github.io/ingress-nginx
     targetRevision: 4.9.0
+    helm:
+      parameters:
+      - name: controller.publishService.enabled
+        value: "true"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
