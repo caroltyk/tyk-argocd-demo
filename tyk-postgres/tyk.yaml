@@ -53,11 +53,11 @@ spec:
       - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].pathType
         value: ImplementationSpecific
       - name: tyk-gateway.gateway.image.tag
-        value: v5.3.0-rc5
+        value: v5.3.0
       - name: tyk-dashboard.dashboard.image.tag
-        value: v5.3.0-rc1
+        value: v5.3.0
       - name: tyk-pump.pump.image.tag
-        value: v1.9.0-rc1
+        value: v1.9.0
       
   syncPolicy:
     syncOptions:
