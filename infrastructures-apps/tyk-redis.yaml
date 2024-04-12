@@ -7,7 +7,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
-    namespace: tyk-postgres
+    namespace: redis
     server: https://kubernetes.default.svc
   project: infrastructure
   source:
