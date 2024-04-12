@@ -1,1 +1,3 @@
 infrastructures-secrets/tyk.yaml
+infrastructures-secrets/tyk-postgres.yaml
+infrastructures-secrets/tyk-mongo.yaml
