@@ -24,7 +24,7 @@ spec:
     syncOptions:
     - CreateNamespace=true
     automated: 
-      prune: false
+      prune: true
   ignoreDifferences:
   - kind: PersistentVolumeClaim
     group: v1
