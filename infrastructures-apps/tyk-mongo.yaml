@@ -1,3 +1,8 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: tyk-mongo
+---  
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
@@ -15,7 +20,5 @@ spec:
     repoURL: https://helm.tyk.io/public/helm/charts/
     targetRevision: 0.1.1
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated: 
       prune: true

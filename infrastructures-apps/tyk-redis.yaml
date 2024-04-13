@@ -4,7 +4,7 @@ metadata:
   name: tyk-redis
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "-1"
+    argocd.argoproj.io/sync-wave: "3"
 spec:
   destination:
     namespace: redis
@@ -21,8 +21,6 @@ spec:
       - name: "existingSecret"
         value: "redis-password-secret"
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated: 
       prune: true
   ignoreDifferences:

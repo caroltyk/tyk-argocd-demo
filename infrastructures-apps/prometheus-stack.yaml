@@ -30,7 +30,6 @@ spec:
         value: k8s-prometheus.org
   syncPolicy:
     syncOptions:
-    - CreateNamespace=true
     - ServerSideApply=true
     automated: 
       prune: true
