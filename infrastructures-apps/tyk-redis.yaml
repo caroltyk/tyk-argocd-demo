@@ -18,6 +18,8 @@ spec:
       parameters:
       - name: "image.tag"
         value: "6.2.13"
+      - name: "existingSecret"
+        value: "redis-password-secret"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

@@ -7,8 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "5"
 spec:
   destination:
-    namespace: tyk-postgres
     server: https://kubernetes.default.svc
+    namespace: tyk-postgres
   project: infrastructure
   source:
     chart: tyk-operator
