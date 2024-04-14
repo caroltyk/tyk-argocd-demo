@@ -41,7 +41,5 @@ spec:
 #      - name: tyk-gateway.gateway.ingress.tls[0].hosts[0]
 #        value: tyk-gw.67-207-68-96.org
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
-      prune: false
+      prune: true
