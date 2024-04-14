@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: applications
+  name: tyk-oss
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
@@ -11,13 +11,11 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: apps
+    path: tyk-oss
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
   project: app
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: false
