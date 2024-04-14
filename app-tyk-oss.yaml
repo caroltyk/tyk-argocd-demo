@@ -14,7 +14,7 @@ spec:
     path: tyk-oss
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-  project: app
+  project: infrastructure
   syncPolicy:
     automated:
       prune: true
