@@ -4,7 +4,7 @@ metadata:
   name: cert-manager
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
     namespace: cert-manager
@@ -19,7 +19,5 @@ spec:
     repoURL: https://charts.jetstack.io
     targetRevision: v1.13.2
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated: 
       prune: true
