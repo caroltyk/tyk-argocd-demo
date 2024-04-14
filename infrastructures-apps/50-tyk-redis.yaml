@@ -18,12 +18,10 @@ spec:
       parameters:
       - name: image.tag
         value: "6.2.13"
-      - name: usePassword
-        value: "true"
-      - name: usePasswordFile
-        value: "true"
-      - name: existingSecret
+      - name: auth.existingSecret
         value: redis-password-secret
+      - name: auth.existingSecretPasswordKey
+        value: redis-password
   syncPolicy:
     automated: 
       prune: true
