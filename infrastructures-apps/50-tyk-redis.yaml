@@ -16,8 +16,6 @@ spec:
     targetRevision: 18.4.0
     helm:
       parameters:
-      - name: image.tag
-        value: "6.2.13"
       - name: auth.existingSecret
         value: redis-password-secret
       - name: auth.existingSecretPasswordKey
