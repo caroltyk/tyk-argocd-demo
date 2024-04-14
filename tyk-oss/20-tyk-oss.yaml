@@ -18,7 +18,7 @@ spec:
       parameters:
       - name: global.secrets.useSecretName
         value: my-secrets
-      - name: global.redis.addrs
+      - name: global.redis.addrs[0]
         value: tyk-redis-master.tyk-oss.svc:6379
       - name: global.redis.passSecret.name
         value: redis-password-secret
