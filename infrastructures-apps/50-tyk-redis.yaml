@@ -16,10 +16,14 @@ spec:
     targetRevision: 18.4.0
     helm:
       parameters:
-      - name: "image.tag"
+      - name: image.tag
         value: "6.2.13"
-      - name: "existingSecret"
-        value: "redis-password-secret"
+      - name: usePassword
+        value: "true"
+      - name: usePasswordFile
+        value: "true"
+      - name: existingSecret
+        value: redis-password-secret
   syncPolicy:
     automated: 
       prune: true
