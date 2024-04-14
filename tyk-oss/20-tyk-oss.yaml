@@ -31,7 +31,7 @@ spec:
 #      - name: tyk-gateway.gateway.ingress.annotations.cert-manager.io/issuer
 #        value: letsencrypt-nginx
       - name: tyk-gateway.gateway.ingress.hosts[0].host
-        value: tyk-gw.67-207-68-96.org
+        value: tyk-gw.67-207-68-96.nip.io
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].path
         value: /
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].pathType
@@ -39,7 +39,7 @@ spec:
 #      - name: tyk-gateway.gateway.ingress.tls[0].secretName
 #        value: letsencrypt-nginx
 #      - name: tyk-gateway.gateway.ingress.tls[0].hosts[0]
-#        value: tyk-gw.67-207-68-96.org
+#        value: tyk-gw.67-207-68-96.nip.io
   syncPolicy:
     automated:
       prune: true
