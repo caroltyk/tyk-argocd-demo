@@ -12,8 +12,8 @@ spec:
   # `privateKeySecretRef` - Kubernetes Secret to store the automatically generated ACME account private key
   acme:
     #    email: carol@tyk.io
-    # server: https://acme-staging-v02.api.letsencrypt.org/directory
-    server: https://acme-v02.api.letsencrypt.org/directory
+    server: https://acme-staging-v02.api.letsencrypt.org/directory
+    # server: https://acme-v02.api.letsencrypt.org/directory
     privateKeySecretRef:
       name: letsencrypt-nginx-private-key
     solvers:

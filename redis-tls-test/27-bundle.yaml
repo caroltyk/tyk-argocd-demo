@@ -2,21 +2,19 @@ apiVersion: trust.cert-manager.io/v1alpha1
 kind: Bundle
 metadata:
   name: my-bundle  # The bundle name will also be used for the target
-  namespace: tyk-oss
 spec:
   sources:
   # Include a bundle of publicly trusted certificates which can be
   # used to validate most TLS certificates on the internet, such as
   # those issued by Let's Encrypt, Google, Amazon and others.
   - useDefaultCAs: true
-
   - secret:
       name: "ca-key-pair"
-      key: "tls.crt"
+      key: "ca.crt"
 
   target:
     # Sync the bundle to a ConfigMap called `my-bundle` in every namespace which
     # has the label "my-bundle/inject=enabled"
     # All ConfigMaps will include a PEM-formatted bundle, here named "root-certs.pem"
-    configMap:
+    secret:
       key: "trust-bundle.pem"
