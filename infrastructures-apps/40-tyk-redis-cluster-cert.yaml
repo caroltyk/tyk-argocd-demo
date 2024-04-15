@@ -48,8 +48,8 @@ spec:
     - client auth
   # At least one of a DNS Name, URI, IP address or otherName is required.
   dnsNames:
-    - *.redis-cluster.svc
-    - *.redis-cluster.svc.cluster.local
+    - "*.redis-cluster.svc"
+    - "*.redis-cluster.svc.cluster.local"
 #  uris:
 #    - spiffe://cluster.local/ns/sandbox/sa/example
 #  ipAddresses:
