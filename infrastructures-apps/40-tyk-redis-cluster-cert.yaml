@@ -19,8 +19,8 @@ spec:
 #    labels:
 #      my-secret-label: foo
 
-  duration: 2160h # 90d
-  renewBefore: 360h # 15d
+  duration: 2160h0m0s # 90d
+  renewBefore: 360h0m0s # 15d
   subject:
     organizations: # Organizations to be used on the Certificate
       - Tyk
@@ -36,7 +36,7 @@ spec:
   # DC - domainComponent
   # UID - userId
   commonName: "*.redis-cluster.svc"
-  isCA: false
+  # isCA: false
   privateKey:
     algorithm: RSA
     encoding: PKCS1
