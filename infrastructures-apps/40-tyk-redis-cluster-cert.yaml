@@ -63,8 +63,8 @@ spec:
 #      utf8Value: upn@example.local
   # Issuer references are always required.
   issuerRef:
-    #name: letsencrypt
-    name: selfsigned
+    name: cluster-ca
+    #name: selfsigned
     # We can reference ClusterIssuers by changing the kind here.
     # The default value is Issuer (i.e. a locally namespaced Issuer)
     ###kind: Issuer
