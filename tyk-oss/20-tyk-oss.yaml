@@ -18,8 +18,17 @@ spec:
       parameters:
       - name: global.secrets.useSecretName
         value: my-secrets
+      
+      # set this for bitnamic redis
+      #- name: global.redis.addrs[0]
+      #  value: tyk-redis-master.redis.svc:6379
+      
+      # set this for bitnami redis-cluster
       - name: global.redis.addrs[0]
-        value: tyk-redis-master.redis.svc:6379
+        value: tyk-redis-cluster.redis-cluster.svc:6379
+      - name: global.redis.enableCluster
+        value: "true"
+
       - name: global.redis.passSecret.name
         value: redis-password-secret
       - name: global.redis.passSecret.keyName
@@ -28,18 +37,18 @@ spec:
         value: "true"
       - name: tyk-gateway.gateway.ingress.className
         value: nginx
-#      - name: tyk-gateway.gateway.ingress.annotations.cert-manager.io/issuer
-#        value: letsencrypt-nginx
+      - name: "tyk-gateway.gateway.ingress.annotations.cert-manager.io/cluster-issuer"
+        value: selfsigned
       - name: tyk-gateway.gateway.ingress.hosts[0].host
         value: tyk-gw.67-207-68-96.nip.io
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].path
         value: /
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].pathType
         value: ImplementationSpecific
-#      - name: tyk-gateway.gateway.ingress.tls[0].secretName
-#        value: letsencrypt-nginx
-#      - name: tyk-gateway.gateway.ingress.tls[0].hosts[0]
-#        value: tyk-gw.67-207-68-96.nip.io
+      - name: tyk-gateway.gateway.ingress.tls[0].secretName
+        value: letsencrypt-nginx # < cert-manager will store the created certificate in this secret.
+      - name: tyk-gateway.gateway.ingress.tls[0].hosts[0]
+        value: tyk-gw.67-207-68-96.nip.io
   syncPolicy:
     automated:
       prune: true
