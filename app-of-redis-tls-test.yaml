@@ -11,7 +11,7 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: infrastructures-redis
+    path: redis-tls-test
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
   project: infrastructure
