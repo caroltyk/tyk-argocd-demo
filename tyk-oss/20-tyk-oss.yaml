@@ -37,7 +37,7 @@ spec:
         value: "true"
       - name: tyk-gateway.gateway.ingress.className
         value: nginx
-      - name: "tyk-gateway.gateway.ingress.annotations.cert-manager\.io\/cluster-issuer"
+      - name: 'tyk-gateway.gateway.ingress.annotations.cert-manager\.io\/cluster-issuer'
         value: selfsigned
       - name: tyk-gateway.gateway.ingress.hosts[0].host
         value: "tyk-gw.67-207-68-96.nip.io"
