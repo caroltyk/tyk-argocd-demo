@@ -28,6 +28,26 @@ spec:
         value: tyk-redis-cluster.redis-cluster.svc:6379
       - name: global.redis.enableCluster
         value: "true"
+      - name: global.redis.useSSL
+        value: "true"
+      - name: global.redis.tlsMinVersion
+        value: "1.2"
+      - name: global.redis.tlsMaxVersion
+        value: "1.3"
+      - name: global.redis.sslInsecureSkipVerify
+        value: "true"
+      - name: global.redis.sslCAFile
+        value: "ca.crt"
+      - name: global.redis.certificatesMountPath
+        value: "/etc/certs"
+      - name: global.redis.sslCertFile
+        value: "tls.crt"
+      - name: global.redis.sslKeyFile
+        value: "tls.key"
+      - name: global.redis.secretName
+        value: "redis-cluster-tls"
+      - name: global.redis.volumeName
+        value: "redis-cert"
 
       - name: global.redis.passSecret.name
         value: redis-password-secret
