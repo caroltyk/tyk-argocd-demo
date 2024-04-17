@@ -25,27 +25,27 @@ spec:
       
       # set this for bitnami redis-cluster
       - name: global.redis.addrs[0]
-        value: tyk-redis-cluster.redis-cluster.svc.cluster.local:6379
+        value: tyk-redis-cluster.redis-cluster.svc:6379
       - name: global.redis.enableCluster
         value: "true"
       - name: global.redis.useSSL
         value: "true"
       - name: global.redis.sslInsecureSkipVerify
-        value: "true"
+        value: "false"
       - name: global.redis.tlsMinVersion
         value: "1.2"
       - name: global.redis.tlsMaxVersion
         value: "1.3"
-      - name: global.redis.sslCAFile
-        value: "/etc/ssl/certs/trust-bundle.pem"
+      - name: global.redis.secretName
+        value: "redis-cluster-tls"
       - name: global.redis.certificatesMountPath
         value: "/etc/ssl/certs"
-      #- name: global.redis.sslCertFile
-      #  value: "tls.crt"
-      #- name: global.redis.sslKeyFile
-      #  value: "tls.key"
-      - name: global.redis.secretName
-        value: "my-bundle"
+      - name: global.redis.sslCAFile
+        value: "/etc/ssl/certs/ca.crt"
+      - name: global.redis.sslCertFile
+        value: "/etc/ssl/certs/tls.crt"
+      - name: global.redis.sslKeyFile
+        value: "/etc/ssl/certs/tls.key"
       - name: global.redis.volumeName
         value: "ca-cert"
 
@@ -62,7 +62,7 @@ spec:
       - name: 'tyk-gateway.gateway.ingress.annotations.cert-manager\.io\/issuer'
         value: letsencrypt-nginx
       - name: tyk-gateway.gateway.ingress.hosts[0].host
-        value: "tyk-gw.139.59.202.232.nip.io"
+        value: "tyk-gw.157.245.30.155.nip.io"
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].path
         value: /
       - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].pathType
@@ -70,7 +70,7 @@ spec:
       - name: tyk-gateway.gateway.ingress.tls[0].secretName
         value: letsencrypt-nginx # < cert-manager will store the created certificate in this secret.
       - name: tyk-gateway.gateway.ingress.tls[0].hosts[0]
-        value: "tyk-gw.139.59.202.232.nip.io"
+        value: "tyk-gw.157.245.30.155.nip.io"
   syncPolicy:
     automated:
       prune: true

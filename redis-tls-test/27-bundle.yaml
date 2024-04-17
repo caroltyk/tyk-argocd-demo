@@ -7,9 +7,9 @@ spec:
   # Include a bundle of publicly trusted certificates which can be
   # used to validate most TLS certificates on the internet, such as
   # those issued by Let's Encrypt, Google, Amazon and others.
-  - useDefaultCAs: true
+  - useDefaultCAs: false
   - secret:
-      name: "ca-key-pair"
+      name: "root-secret"
       key: "ca.crt"
 
   target:
