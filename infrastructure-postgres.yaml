@@ -1,23 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-stack-mongo-app
+  name: infrastructure-postgres
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
-    argocd.argoproj.io/sync-wave: "100"
+    argocd.argoproj.io/sync-wave: "1"
 spec:
   destination:
     name: in-cluster
     namespace: argocd
   source:
-    path: tyk-stack-mongo
+    path: infrastructure-postgres
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-  project: app
+  project: infrastructure
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
-      selfHeal: false

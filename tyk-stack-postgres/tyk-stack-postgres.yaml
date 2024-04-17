@@ -1,0 +1,60 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-stack-postgres
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tyk-stack-postgres
+  project: infrastructure
+  source:
+    chart: tyk-stack
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.3.0
+    helm:
+      parameters:
+      - name: global.components.bootstrap
+        value: "false"
+      - name: global.adminUser.useSecretName
+        value: admin-secrets
+      - name: global.secrets.useSecretName
+        value: my-secrets
+      - name: global.redis.addrs
+        value: tyk-redis-master.redis.svc:6379
+      - name: global.redis.passSecret.name
+        value: redis-password-secret
+      - name: global.redis.passSecret.keyName
+        value: redis-password
+      - name: global.postgres.connectionStringSecret.name
+        value: postgres-secrets
+      - name: global.postgres.connectionStringSecret.keyName
+        value: postgresUrl
+      - name: tyk-gateway.gateway.ingress.enabled
+        value: "true"
+      - name: tyk-gateway.gateway.ingress.className
+        value: nginx
+      - name: tyk-gateway.gateway.ingress.hosts[0].host
+        value: tyk-gw.org
+      - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].path
+        value: /
+      - name: tyk-gateway.gateway.ingress.hosts[0].paths[0].pathType
+        value: ImplementationSpecific
+      - name: tyk-dashboard.dashboard.ingress.enabled
+        value: "true"
+      - name: tyk-dashboard.dashboard.ingress.className
+        value: nginx
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].host
+        value: tyk-dashboard.org
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].path
+        value: /
+      - name: tyk-dashboard.dashboard.ingress.hosts[0].paths[0].pathType
+        value: ImplementationSpecific
+      
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: false
