@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-stack-mongo-app
+  name: tyk-stack-app
   finalizers:
   - resources-finalizer.argocd.argoproj.io
   annotations:
@@ -11,7 +11,7 @@ spec:
     name: in-cluster
     namespace: argocd
   source:
-    path: tyk-stack-mongo
+    path: tyk-stack
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
   project: app
