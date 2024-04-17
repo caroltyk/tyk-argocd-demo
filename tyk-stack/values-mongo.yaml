@@ -1,0 +1,45 @@
+global:
+  global:
+    components:
+      bootstrap: "false"
+    adminUser:
+      useSecretName: admin-secrets
+    secrets:
+      useSecretName: my-secrets
+    redis:
+      addrs:
+        - redis-master.redis.svc:6379
+      passSecret:
+        name: redis-password-secret
+        keyName: redis-password
+    mongo:
+      driver: mgo
+      connectionURLSecret:
+        name: mongourl-secrets
+        keyName: mongoUrl
+    storageType: mongo
+  tyk-gateway:
+    tyk-gateway:
+      ingress:
+        enabled: "true"
+        className: nginx
+      hosts:
+        - host: tyk-gw.org
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+  tyk-dashboard:
+    dashboard:
+      ingress:
+        enabled: "true"
+        className: nginx
+        hosts:
+          - host: tyk-dashboard.org
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
+  tyk-pump:
+    pump:
+      backend:
+        - prometheus
+        - mongo

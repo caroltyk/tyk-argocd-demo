@@ -1,19 +1,23 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-operator
+  name: tyk-stack
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "5"
+    argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
-    namespace: tyk-stack-mongo
     server: https://kubernetes.default.svc
+    namespace: tyk-stack
   project: infrastructure
   source:
-    chart: tyk-operator
-    repoURL: https://helm.tyk.io/public/helm/charts/
-    targetRevision: 0.16.0
+    chart: tyk-stack
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.3.0
+    helm:
+      valueFiles:
+        - values-postgres.yaml
+        # - values-mongo.yaml
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
