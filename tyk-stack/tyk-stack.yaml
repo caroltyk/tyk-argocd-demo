@@ -53,6 +53,9 @@ spec:
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
+        tyk-bootstrap:
+          bootstrap:
+            portal: "false"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
