@@ -34,7 +34,7 @@ spec:
               name: postgres-secrets
               keyName: postgresUrl
         tyk-gateway:
-          tyk-gateway:
+          gateway:
             ingress:
               enabled: "true"
               className: nginx
