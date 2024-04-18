@@ -38,11 +38,11 @@ spec:
             ingress:
               enabled: "true"
               className: nginx
-            hosts:
-              - host: tyk-gw.org
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
+              hosts:
+                - host: tyk-gw.org
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
         tyk-dashboard:
           dashboard:
             ingress:
