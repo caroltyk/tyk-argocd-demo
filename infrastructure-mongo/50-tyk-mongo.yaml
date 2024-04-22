@@ -11,9 +11,9 @@ spec:
     server: https://kubernetes.default.svc
   project: infrastructure
   source:
-    chart: simple-mongodb
-    repoURL: https://helm.tyk.io/public/helm/charts/
-    targetRevision: 0.1.1
+    chart: mongodb
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 15.1.2
   syncPolicy:
     automated: 
       prune: true
