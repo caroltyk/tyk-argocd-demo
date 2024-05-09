@@ -1,0 +1,12 @@
+apiVersion: jaegertracing.io/v1
+kind: Jaeger
+metadata:
+  name: jaeger-all-in-one
+  namespace: monitoring
+spec:
+  ingress:
+    enabled: true
+    annotations:
+      kubernetes.io/ingress.class: nginx # Ingress annotations here
+    hosts:
+      - k8s-jaeger.org
