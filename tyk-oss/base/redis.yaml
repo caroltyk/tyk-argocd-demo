@@ -1,0 +1,28 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-oss
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "50"
+spec:
+  destination:
+    namespace: tyk-oss
+    server: https://kubernetes.default.svc
+  project: infrastructure
+  source:
+    chart: redis
+    repoURL: https://charts.bitnami.com/bitnami
+    targetRevision: 19.0.2
+    helm:
+      parameters:
+      - name: auth.existingSecret
+        value: redis-password-secret
+      - name: auth.existingSecretPasswordKey
+        value: redis-password
+  syncPolicy:
+    automated: 
+      prune: true
+  ignoreDifferences:
+  - kind: PersistentVolumeClaim
+    group: v1

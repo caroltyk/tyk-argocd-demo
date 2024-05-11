@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+resources:
+- redis-cluster-namespace.yaml
+- redis-cluster-cert.yaml
+- redis-cluster.yaml
+- sealedsecret-redis-cluster.yaml
+- ../../base/namespace.yaml
+- ../../base/cert-issuer.yaml
+- ../../base/sealedsecret-tyk-oss.yaml
+- ../../base/tyk-cert.yaml
+- ../../base/tyk-oss.yaml
+patchesStrategicMerge:
+- tyk-oss.yaml

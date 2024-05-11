@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-oss-app
+  name: tyk-oss-redis-cluster-app
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,7 +10,7 @@ spec:
     namespace: tyk-oss
     server: https://kubernetes.default.svc
   source:
-    path: tyk-oss/base
+    path: tyk-oss/overlays/redis-cluster
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
   project: infrastructure
