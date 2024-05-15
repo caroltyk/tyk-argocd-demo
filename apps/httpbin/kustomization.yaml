@@ -10,4 +10,5 @@ resources:
   - httpbin-basic-auth.yaml
 images:
   - name: caroltyk/fastapi-httpbin
-    newTag: v0.0.1
+    # newTag: v0.0.1
+    newTag: latest
