@@ -27,7 +27,7 @@ spec:
             sslInsecureSkipVerify: true
           redis:
             addrs:
-              - redis-dp-master.tyk-staging-hybrid.svc:6379
+              - redis-staging-hybrid-dp-master.tyk-staging-hybrid.svc:6379
             passSecret:
               name: "redis-password-secret"
               keyName: "redis-password"

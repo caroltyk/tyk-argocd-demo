@@ -1,0 +1,19 @@
+{
+	"folders": [
+		{
+			"path": "../../tyk-apiops-demo"
+		},
+		{
+			"path": "../../fastapi-httpbin"
+		},
+		{
+			"path": "../../tyk-operator"
+		},
+		{
+			"path": ".."
+		},
+		{
+			"path": "../../tyk-charts"
+		}
+	]
+}
