@@ -1,0 +1,16 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: OperatorContext
+metadata:
+  name: tyk-dp-ctx
+  namespace: tyk-staging-hybrid
+spec:
+  secretRef:
+    name: tyk-operator-conf
+    namespace: tyk-staging-hybrid
+  env:
+    mode: pro
+    url: http://dashboard-svc-tyk-tyk-dashboard.tyk-cp.svc:3000
+    insecureSkipVerify: true
+    ingress:
+      httpPort: 8000
+      httpsPort: 8443
