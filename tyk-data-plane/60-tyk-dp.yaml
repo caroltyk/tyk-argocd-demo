@@ -1,0 +1,104 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-dp
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tyk-dp
+  project: infrastructure
+  source:
+    chart: tyk-data-plane
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.4.0
+    helm:
+      valuesObject:
+        ## gateway: opentelemetry and ingress enabled
+        ## mdcb in tyk-cp namespace
+        ## redis in tyk-dp namespace
+        global:
+          secrets:
+            useSecretName: my-secrets
+          remoteControlPlane:
+            useSecretName: mdcb-connection-secret
+            connectionString: "mdcb-svc-tyk-tyk-mdcb.tyk-cp.svc:9091"
+            useSSL: true
+            sslInsecureSkipVerify: false
+          redis:
+            addrs:
+              - redis-dp-master.tyk-dp.svc:6379
+            passSecret:
+              name: "redis-password-secret"
+              keyName: "redis-password"
+          mdcbSynchronizer:
+            enabled: true
+        tyk-gateway:
+          gateway:
+            opentelemetry:
+              enabled: "true"
+              # endpoint: "jaeger-all-in-one-collector.monitoring.svc:4317"
+              endpoint: "opentelemetry-collector.monitoring.svc:4317"
+            ingress:
+              enabled: "true"
+              className: "nginx"
+              annotations:
+                cert-manager.io/issuer: letsencrypt-nginx
+              hosts:
+                - host: "tyk-gw.159.65.212.135.nip.io"
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+              tls:
+                - secretName: letsencrypt-nginx
+                  hosts:
+                    - "tyk-gw.159.65.212.135.nip.io"
+            extraEnvs:
+            - name: SECRET_1
+              valueFrom:
+                secretKeyRef: 
+                  name: gateway-secrets
+                  key: secret_1
+            - name: SECRET_2
+              valueFrom:
+                secretKeyRef: 
+                  name: gateway-secrets
+                  key: secret_2
+            extraVolumes:
+              - name: self-signed-ca
+                secret:
+                  secretName: my-bundle
+            extraVolumeMounts: 
+              - name: self-signed-ca
+                mountPath: "/etc/ssl/certs/trust-bundle.pem"
+                subPath: trust-bundle.pem
+        tyk-pump:
+          pump:
+            securityContext:
+              seccompProfile:
+                type: RuntimeDefault
+            containerSecurityContext:
+              allowPrivilegeEscalation: false
+              capabilities:
+                drop:
+                  - "ALL"
+            # hybridPump:
+            #  enableAggregateAnalytics: false
+            prometheusPump:
+              prometheusOperator:
+                enabled: true
+                podMonitorSelector:
+                  release: prometheus-stack
+            extraVolumes:
+              - name: self-signed-ca
+                secret:
+                  secretName: my-bundle
+            extraVolumeMounts: 
+              - name: self-signed-ca
+                mountPath: "/etc/ssl/certs/trust-bundle.pem"
+                subPath: trust-bundle.pem
+  syncPolicy:
+    automated:
+      prune: true

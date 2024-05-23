@@ -1,0 +1,129 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-cp
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "4"
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tyk-cp
+  project: infrastructure
+  source:
+    chart: tyk-control-plane
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.4.0
+    helm:
+      valuesObject:
+        global:
+          components:
+            bootstrap: false
+            devPortal: true
+            operator: false
+          adminUser:
+            useSecretName: admin-secrets
+          secrets:
+            useSecretName: my-secrets
+          redis:
+            addrs:
+              - redis-master.tyk-cp.svc:6379
+            passSecret:
+              name: redis-password-secret
+              keyName: redis-password
+          postgres:
+            connectionStringSecret:
+              name: postgres-secrets
+              keyName: postgresUrl
+          mdcbSynchronizer:
+            enabled: true
+        tyk-bootstrap:
+          bootstrap:
+            jobs:
+              postInstall:
+                extraEnvs: []
+        #        - name: TYK_K8SBOOTSTRAP_TYK_ORG_ID
+        #          value: 663ccd8cf05df70001366fdb
+        #        - name: TYK_K8SBOOTSTRAP_TYK_ADMIN_AUTH
+        #          value: af882300de4344fb5cc2e2ae49bd8293
+        tyk-dashboard:
+          dashboard:
+            hostName: tyk-dashboard.org
+            tib:
+              enabled: "true"
+            ingress:
+              enabled: "true"
+              className: nginx
+              hosts:
+                - host: tyk-dashboard.org
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+            extraEnvs:
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLED
+                value: "true"
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLEAPI
+                value: "true"
+              - name: TYK_DB_SECURITY_ALLOWADMINRESETPASSWORD
+                value: "true"
+        tyk-mdcb:
+          mdcb:
+            useSecretName: mdcb-secrets
+            tls:
+              # enables ssl for mdcb
+              useSSL: "true"
+              
+              # the path to where the keys will be mounted in the pod
+              certificatesMountPath: "/etc/certs"
+        
+              # location to pem encoded private key
+              certificateKeyFile: "/etc/certs/tls.key"
+        
+              # location to pem encoded certificate
+              certificateCertFile: "/etc/certs/tls.crt"
+        
+              # the name of the secret
+              secretName: "mdcb-tls-secret"
+        
+              # the name of the volume
+              volumeName: "mdcb-tls-secret-volume"
+        
+            podSecurityContext:
+              runAsUser: 1000
+              fsGroup: 2000
+              runAsNonRoot: true
+        
+            # containerSecurityContext holds container-level security attributes for Tyk MDCB container. All fields from SecurityContext object can be added here.
+            containerSecurityContext:
+              runAsNonRoot: true
+              runAsUser: 1000
+              allowPrivilegeEscalation: false
+              privileged: false
+              readOnlyRootFilesystem: true
+              seccompProfile:
+                type: RuntimeDefault
+              capabilities:
+                drop:
+                  - ALL
+        tyk-dev-portal:
+          hostName: tyk-dev-portal.org
+          license: "eyJhbGciOiJSUzI1NiIsInR5cCI6IkpXVCJ9.eyJhbGxvd2VkX25vZGVzIjoiYjY2YTc1ZGYtYTkyZi00OTBjLTczY2EtYjBmNGM1MmI1YmMxLDA5MjE2YjNhLTc3ZWEtNDNhYS00ZmYzLTIyYzI0YTI0ZjEyZSwyNGUwM2QzNi1hZmQ4LTQxZjYtNDE4ZS1jNjY2YmIwZDU2ZjcsZjgxM2ZmNTYtZTg4Yi00OTI4LTQyMzctYTU3YWNhZTJjMjRiLDAxODhhOTJiLTgyZmUtNGI4Zi03NTgwLTM1NzM5ZTgwMDQ0Yiw4OTI4ZjhiOC00ZWEyLTQzNTktNDBiZi01NzFhNTI2Nzc0YmMsYjcxY2E3OWItMWYyZS00ZGYyLTUyZjYtZjlhMTM3NzNiYmI5LDExZTI1YWRmLTY2NGYtNDc0My02YzRlLTI3MjlmNjgzMzVkMixkNzJjY2U1Yi1mM2ZkLTRlNjQtNWM4OC0wYjc2NTA5NzdjNzcsZjNjOWQxMWItZTA4MC00MTFiLTc0ZDgtNGEzYWJhYWZlZDZiIiwiZXhwIjoxNzE3ODA0Nzk5LCJpYXQiOjE3MTUxNjk1NDIsIm93bmVyIjoiNjFjY2U2MmMxMjFjYTEwMDAxOGJiMTkwIiwic2NvcGUiOiJtdWx0aV90ZWFtLHJiYWMsZ3JhcGgsZmVkZXJhdGlvbiIsInYiOiIyIn0.SrTLjDVmBvQkuSMqwIzMP3JknEDhqiHElZgwtD4aKE9bQj7a3FmMy9leDhqXPRzzB9uB6Ju9NsLbdEtxZ2HdBxVSJGjWx-Xb7Fcb10Yaq5scZl3yAK9ZdFQT9ISPzWMkYM90OCaEGQjkcF7ttI_yqe2L8IBOxstGWupvX2U1k7lSpHoL4eYXfNmqvRLlBtqtvOqxJlLKj_3ZmmYUSlsPvL2h2266WADRDsusVw71XmlVLNBL3t-qUzlbD4qL_yM47SaNKRLoZfYNWJDMoEpcf7jIfuJWBAcQZbzkTNFPsj_8OBqOd3kf3lkbPGC5u9afveNvGstHRSgZSCuuVAIS-w"
+          image:
+            tag: v1.9.0
+          ingress:
+            enabled: "true"
+            className: nginx
+            hosts:
+              - host: tyk-dev-portal.org
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
+        tyk-operator:
+          image:
+            tag: "v0.17.1"
+          serviceMonitor: true
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: false
