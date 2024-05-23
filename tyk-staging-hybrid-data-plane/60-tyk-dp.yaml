@@ -53,17 +53,6 @@ spec:
                 - secretName: letsencrypt-nginx
                   hosts:
                     - "tyk-dp.159.65.212.135.nip.io"
-            extraEnvs:
-            - name: SECRET_1
-              valueFrom:
-                secretKeyRef: 
-                  name: gateway-secrets
-                  key: secret_1
-            - name: SECRET_2
-              valueFrom:
-                secretKeyRef: 
-                  name: gateway-secrets
-                  key: secret_2
             extraVolumes:
               - name: self-signed-ca
                 secret:
