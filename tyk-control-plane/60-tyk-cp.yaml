@@ -18,7 +18,7 @@ spec:
       valuesObject:
         global:
           components:
-            bootstrap: false
+            bootstrap: true
             devPortal: true
             operator: false
           adminUser:
