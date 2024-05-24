@@ -9,7 +9,7 @@ spec:
     namespace: tyk-staging-hybrid
   env:
     mode: pro
-    url: http://dashboard-svc-tyk-tyk-dashboard.tyk-cp.svc:3000
+    url: https://rural-gander-adm.aws-euw2.cloud-ara.tyk.io
     insecureSkipVerify: true
     ingress:
       httpPort: 8000

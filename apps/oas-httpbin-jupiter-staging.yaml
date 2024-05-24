@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oas-httpbin-jupiter-staging
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: oas-httpbin-jupiter-staging
+  source:
+    repoURL: 'https://github.com/caroltyk/tyk-apiops-demo'
+    path: oas-httpbin
+    targetRevision: jupiter-staging
+  sources: []
+  project: app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+  
