@@ -1,23 +1,20 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: all-applications
+  name: tyk-data-plane-app
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "100"
 spec:
   destination:
-    name: in-cluster
-    namespace: argocd
+    namespace: tyk-dp
+    server: https://kubernetes.default.svc
   source:
-    path: apps
+    path: tyk-data-plane
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-  project: app
+  project: infrastructure
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
       selfHeal: false
