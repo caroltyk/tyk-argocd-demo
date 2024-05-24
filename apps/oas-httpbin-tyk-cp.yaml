@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: oas-httpbin-tyk-cp
+spec:
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: oas-httpbin-tyk-cp
+  source:
+    repoURL: 'https://github.com/caroltyk/tyk-apiops-demo'
+    path: oas-httpbin
+    targetRevision: tyk-cp
+  sources: []
+  project: app
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: false
+    syncOptions:
+      - CreateNamespace=true
+  
