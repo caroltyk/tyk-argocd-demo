@@ -12,8 +12,6 @@ spec:
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
     kustomize:
-      namePrefix: ''
-      nameSuffix: ''
       commonLabels:
         app: tyk-stack-mongo-demo
   destination:

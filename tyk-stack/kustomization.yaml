@@ -1,2 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
 resources:
-  - "*.yaml"
+- cert-issuer.yaml
+- redis.yaml
+- sealedsecret-tyk-stack.yaml
+- tyk-mongo.yaml
+- tyk-stack-dashboard-tls-cert.yaml
+- tyk-stack-gw-tls.cert.yaml
+- tyk-stack.yaml
