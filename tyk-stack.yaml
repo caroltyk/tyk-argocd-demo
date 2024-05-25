@@ -1,23 +1,30 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-stack-app
+  name: tyk-stack-mongo-demo
+  namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
-  annotations:
-    argocd.argoproj.io/sync-wave: "100"
 spec:
-  destination:
-    name: in-cluster
-    namespace: argocd
+  project: infrastructure
   source:
     path: tyk-stack
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-  project: app
+    kustomize:
+      namePrefix: ''
+      nameSuffix: ''
+      commonLabels:
+        app: tyk-stack-mongo-demo
+  destination:
+    name: in-cluster
+    namespace: tyk-stack
+  info:
+    - name: 'Deploy Tyk Stack demo with MongoDB backend'
+      value: 'https://tyk.io'
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
     automated:
       prune: true
-      selfHeal: false
+      selfHeal: true

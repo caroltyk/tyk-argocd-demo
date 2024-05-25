@@ -3,12 +3,9 @@ kind: Application
 metadata:
   name: tyk-stack
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "4"
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: tyk-stack
   project: infrastructure
   source:
     chart: tyk-stack
