@@ -1,14 +1,14 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-staging-hybrid-dp
+  name: tyk-hybrid-dp
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: tyk-staging-hybrid
+    namespace: tyk-hybrid
   project: infrastructure
   source:
     chart: tyk-data-plane
@@ -16,7 +16,7 @@ spec:
     targetRevision: 1.4.0
     helm:
       valuesObject:
-        ## redis in tyk-staging-hybrid namespace
+        ## redis in tyk-hybrid namespace
         global:
           secrets:
             useSecretName: my-secrets
@@ -27,7 +27,7 @@ spec:
             sslInsecureSkipVerify: true
           redis:
             addrs:
-              - redis-staging-hybrid-dp-master.tyk-staging-hybrid.svc:6379
+              - redis-hybrid-dp-master.tyk-hybrid.svc:6379
             passSecret:
               name: "redis-password-secret"
               keyName: "redis-password"

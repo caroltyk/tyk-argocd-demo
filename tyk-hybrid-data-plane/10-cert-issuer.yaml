@@ -2,7 +2,7 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: letsencrypt-nginx
-  namespace: tyk-staging-hybrid
+  namespace: tyk-hybrid
   #  annotations:
   #    argocd.argoproj.io/sync-wave: "10"
 spec:
