@@ -29,15 +29,13 @@ spec:
             devPortal: "tyk-dev-portal-conf"
           redis:
             addrs:
-              - tyk-stack-redis-master.tyk-stack.svc:6379
+              - redis-master:6379
             passSecret:
               name: redis-password-secret
               keyName: redis-password
           mongo:
             driver: mongo-go
-            connectionURLSecret:
-              name: mongourl-secrets
-              keyName: mongoUrl
+            mongoURL: mongodb://mongo-mongodb:27017/tyk_analytics
           storageType: mongo
         tyk-gateway:
           gateway:
@@ -140,7 +138,6 @@ spec:
                 paths:
                   - path: /
                     pathType: ImplementationSpecific
-        
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

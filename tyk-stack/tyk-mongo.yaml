@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-stack-mongo
+  name: mongo
   namespace: argocd
 spec:
   destination:

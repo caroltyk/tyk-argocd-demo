@@ -1,10 +1,10 @@
 apiVersion: cert-manager.io/v1
 kind: Certificate
 metadata:
-  name: tyk-stack-gw-tls-cert
+  name: gw-tls-cert
 spec:
   # Secret names are always required.
-  secretName: tyk-stack-gw-tls-secret
+  secretName: gw-tls-secret
 
   # secretTemplate is optional. If set, these annotations and labels will be
   # copied to the Secret named example-com-tls. These labels and annotations will
