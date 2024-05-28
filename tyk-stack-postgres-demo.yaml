@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-stack-psql-demo
+  namespace: argocd
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: infrastructure
+  source:
+    path: tyk-stack/postgres
+    repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+    targetRevision: HEAD
+    kustomize:
+      commonLabels:
+        tyk.io/argocd-demo: tyk-stack-psql-demo
+      patches:
+        - target:
+            kind: Application
+          patch: |-
+            - op: "add"
+              path: "/spec/destination/namespace"
+              value: "tyk-postgres"
+  destination:
+    name: in-cluster
+    namespace: tyk-postgres
+  info:
+    - name: 'Deploy Tyk Stack demo with PostgreSQL backend'
+      value: 'https://tyk.io'
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true
