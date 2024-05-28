@@ -4,7 +4,7 @@ metadata:
   name: tyk-hybrid-dp
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "20"
+    argocd.argoproj.io/sync-wave: "50"
 spec:
   destination:
     server: https://kubernetes.default.svc
@@ -27,7 +27,7 @@ spec:
             sslInsecureSkipVerify: true
           redis:
             addrs:
-              - redis-hybrid-dp-master.tyk-hybrid.svc:6379
+              - redis-hybrid-dp-master:6379
             passSecret:
               name: "redis-password-secret"
               keyName: "redis-password"
@@ -37,7 +37,6 @@ spec:
           gateway:
             opentelemetry:
               enabled: "true"
-              # endpoint: "jaeger-all-in-one-collector.monitoring.svc:4317"
               endpoint: "opentelemetry-collector.monitoring.svc:4317"
             ingress:
               enabled: "true"
@@ -45,32 +44,16 @@ spec:
               annotations:
                 cert-manager.io/issuer: letsencrypt-nginx
               hosts:
-                - host: "tyk-dp.159.65.212.135.nip.io"
+                - host: "tyk-hybrid-dp.org"
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
               tls:
                 - secretName: letsencrypt-nginx
                   hosts:
-                    - "tyk-dp.159.65.212.135.nip.io"
-            extraVolumes:
-              - name: self-signed-ca
-                secret:
-                  secretName: my-bundle
-            extraVolumeMounts: 
-              - name: self-signed-ca
-                mountPath: "/etc/ssl/certs/trust-bundle.pem"
-                subPath: trust-bundle.pem
+                    - "tyk-hybrid-dp.org"
         tyk-pump:
           pump:
-            securityContext:
-              seccompProfile:
-                type: RuntimeDefault
-            containerSecurityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - "ALL"
             # hybridPump:
             #  enableAggregateAnalytics: false
             prometheusPump:
@@ -78,14 +61,6 @@ spec:
                 enabled: true
                 podMonitorSelector:
                   release: prometheus-stack
-            extraVolumes:
-              - name: self-signed-ca
-                secret:
-                  secretName: my-bundle
-            extraVolumeMounts: 
-              - name: self-signed-ca
-                mountPath: "/etc/ssl/certs/trust-bundle.pem"
-                subPath: trust-bundle.pem
   syncPolicy:
     automated:
       prune: true

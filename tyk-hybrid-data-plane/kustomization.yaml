@@ -1,0 +1,9 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- cert-issuer.yaml
+- redis-application.yaml
+- tyk-hybrid-application.yaml
+- tyk-hybrid-sealedsecrets.yaml
+- tyk-operator-ctx.yaml

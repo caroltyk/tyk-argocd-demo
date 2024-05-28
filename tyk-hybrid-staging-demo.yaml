@@ -1,0 +1,47 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-hybrid-staging-demo
+  namespace: argocd
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: infrastructure
+  source:
+    path: tyk-hybrid-data-plane
+    repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+    targetRevision: HEAD
+    kustomize:
+      commonLabels:
+        tyk.io/argocd-demo: tyk-hybrid-staging-demo
+      patches:
+        - target:
+            kind: Application
+          patch: |-
+            - op: "replace"
+              path: "/spec/destination/namespace"
+              value: "tyk-hybrid"
+        - target:
+            kind: OperatorContext
+          patch: |-
+            - op: "replace"
+              path: "/spec/secretRef/namespace"
+              value: "tyk-hybrid"
+  destination:
+    namespace: tyk-hybrid
+    server: https://kubernetes.default.svc
+  syncPolicy:
+    managedNamespaceMetadata:
+      labels: # The labels to set on the application namespace
+        pod-security.kubernetes.io/enforce: restricted
+        pod-security.kubernetes.io/enforce-version: latest
+        pod-security.kubernetes.io/warn: restricted
+        pod-security.kubernetes.io/warn-version: latest
+    syncOptions:
+      - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: false

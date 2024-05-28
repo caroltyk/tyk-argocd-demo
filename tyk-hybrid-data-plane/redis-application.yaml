@@ -4,10 +4,10 @@ metadata:
   name: redis-hybrid-dp
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "50"
+    argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
-    namespace: tyk-staging-hybrid
+    namespace: tyk-hybrid
     server: https://kubernetes.default.svc
   project: infrastructure
   source:
