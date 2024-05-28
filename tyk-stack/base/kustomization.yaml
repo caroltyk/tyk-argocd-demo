@@ -4,7 +4,6 @@ kind: Kustomization
 resources:
 - cert-issuer.yaml
 - redis-application.yaml
-- tyk-stack-sealedsecrets.yaml
 - tyk-stack-dashboard-tls-cert.yaml
 - tyk-stack-gw-tls-cert.yaml
 - tyk-stack-application.yaml

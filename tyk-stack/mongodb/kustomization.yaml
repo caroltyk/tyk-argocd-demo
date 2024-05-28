@@ -1,6 +1,7 @@
 resources:
   - ../base/
   - tyk-mongo-application.yaml
+  - tyk-stack-sealedsecrets.yaml
 patches:
   - patch: |-
       apiVersion: argoproj.io/v1alpha1
