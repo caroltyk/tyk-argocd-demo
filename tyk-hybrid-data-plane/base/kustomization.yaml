@@ -5,5 +5,4 @@ resources:
 - cert-issuer.yaml
 - redis-application.yaml
 - tyk-hybrid-application.yaml
-- tyk-hybrid-sealedsecrets.yaml
 - tyk-operator-ctx.yaml

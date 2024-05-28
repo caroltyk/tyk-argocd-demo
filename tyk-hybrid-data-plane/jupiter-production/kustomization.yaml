@@ -1,0 +1,12 @@
+resources:
+- ../base/
+- tyk-hybrid-sealedsecrets.yaml
+
+patches:
+  - target:
+      kind: Application
+      name: tyk-hybrid-dp
+    patch: |-
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
+        value: "relevant-oven-adm.aws-euw2.cloud-ara.tyk.io:443"

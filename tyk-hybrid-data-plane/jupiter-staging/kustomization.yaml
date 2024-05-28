@@ -1,0 +1,24 @@
+resources:
+- ../base/
+- tyk-hybrid-stg-sealedsecrets.yaml
+
+patches:
+  - target:
+      kind: Application
+      name: tyk-hybrid-dp
+    patch: |-
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
+        value: "rural-gander-hyb.aws-euw2.cloud-ara.tyk.io:443"
+  - target:
+      kind: Application
+    patch: |-
+      - op: "replace"
+        path: "/spec/destination/namespace"
+        value: "tyk-hybrid-stg"
+  - target:
+      kind: OperatorContext
+    patch: |-
+      - op: "replace"
+        path: "/spec/secretRef/namespace"
+        value: "tyk-hybrid-stg"
