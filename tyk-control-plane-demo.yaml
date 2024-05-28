@@ -21,7 +21,7 @@ spec:
         - target:
             kind: Application
           patch: |-
-            - op: "add"
+            - op: "replace"
               path: "/spec/destination/namespace"
               value: "tyk-cp"
         - target:
