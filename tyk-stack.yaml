@@ -13,7 +13,15 @@ spec:
     targetRevision: HEAD
     kustomize:
       commonLabels:
-        app: tyk-stack-mongo-demo
+        tyk.io/argocd-demo: tyk-stack-mongo-demo
+      namespace: tyk-stack
+      patches:
+        - target:
+            kind: Application
+          patch: |-
+            - op: "add"
+              path: "/spec/destination/namespace"
+              value: "tyk-stack"
   destination:
     name: in-cluster
     namespace: tyk-stack
