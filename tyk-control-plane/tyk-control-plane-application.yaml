@@ -32,7 +32,7 @@ spec:
             useSecretName: my-secrets
           redis:
             addrs:
-              - redis-master:6379
+              - redis-cp-master:6379
             passSecret:
               name: redis-password-secret
               keyName: redis-password
