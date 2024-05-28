@@ -17,6 +17,12 @@ spec:
     kustomize:
       commonLabels:
         tyk.io/argocd-demo: tyk-hybrid-staging-demo
+      resources:
+        - cert-issuer.yaml
+        - redis-application.yaml
+        - tyk-hybrid-application.yaml
+        - tyk-hybrid-stg-sealedsecrets.yaml
+        - tyk-operator-ctx.yaml
       patches:
         - target:
             kind: Application
