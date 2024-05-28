@@ -7,3 +7,4 @@ resources:
 - tyk-stack-dashboard-tls-cert.yaml
 - tyk-stack-gw-tls-cert.yaml
 - tyk-stack-application.yaml
+- tyk-operator-ctx.yaml

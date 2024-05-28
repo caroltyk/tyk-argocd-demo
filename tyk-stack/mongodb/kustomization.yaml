@@ -24,3 +24,9 @@ patches:
                     - "prometheus"
                     - "mongo"
                   uptimePumpBackend: "mongo"
+  - target:
+      kind: Application
+    patch: |-
+      - op: "add"
+        path: "/spec/destination/namespace"
+        value: "tyk-mongo"

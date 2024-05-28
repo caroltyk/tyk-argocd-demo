@@ -27,3 +27,9 @@ patches:
                     - "prometheus"
                     - "postgres"
                   uptimePumpBackend: "postgres"
+  - target:
+      kind: Application
+    patch: |-
+      - op: "add"
+        path: "/spec/destination/namespace"
+        value: "tyk-postgres"

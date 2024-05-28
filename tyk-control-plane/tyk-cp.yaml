@@ -8,7 +8,6 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: tyk-cp
   project: infrastructure
   source:
     chart: tyk-control-plane
@@ -27,7 +26,7 @@ spec:
             useSecretName: my-secrets
           redis:
             addrs:
-              - redis-master.tyk-cp.svc:6379
+              - redis-master:6379
             passSecret:
               name: redis-password-secret
               keyName: redis-password

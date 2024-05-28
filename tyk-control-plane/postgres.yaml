@@ -7,7 +7,6 @@ metadata:
     argocd.argoproj.io/sync-wave: "50"
 spec:
   destination:
-    namespace: postgres
     server: https://kubernetes.default.svc
   project: infrastructure
   source:
@@ -16,7 +15,7 @@ spec:
     targetRevision: 12.12.10
     helm:
       parameters:
-      - name: auth.database
+      - name: global.postgresql.auth.database
         value: "tyk_analytics"
       - name: global.postgresql.auth.existingSecret
         value: postgres-password
