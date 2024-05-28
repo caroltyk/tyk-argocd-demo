@@ -1,0 +1,26 @@
+resources:
+  - ../base/
+  - tyk-stack-postgres-sealedsecrets.yaml
+  - tyk-mongo-application.yaml
+patches:
+  - patch: |-
+      apiVersion: argoproj.io/v1alpha1
+      kind: Application
+      metadata:
+        name: tyk-stack
+        namespace: argocd
+      spec:
+        source:
+          helm:
+            valuesObject:
+              global:
+                mongo:
+                  driver: mongo-go
+                  mongoURL: mongodb://mongo-mongodb:27017/tyk_analytics
+                storageType: mongo
+              tyk-pump:
+                pump:
+                  backend:
+                    - "prometheus"
+                    - "mongo"
+                  uptimePumpBackend: "mongo"

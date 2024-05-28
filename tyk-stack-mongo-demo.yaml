@@ -3,6 +3,11 @@ kind: Application
 metadata:
   name: tyk-stack-mongo-demo
   namespace: argocd
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
 spec:
   project: infrastructure
   source:
@@ -18,10 +23,10 @@ spec:
           patch: |-
             - op: "add"
               path: "/spec/destination/namespace"
-              value: "tyk-stack"
+              value: "tyk-mongo"
   destination:
     name: in-cluster
-    namespace: tyk-stack
+    namespace: tyk-mongo
   info:
     - name: 'Deploy Tyk Stack demo with MongoDB backend'
       value: 'https://tyk.io'
@@ -29,4 +34,5 @@ spec:
     syncOptions:
     - CreateNamespace=true
     automated:
+      prune: true
       selfHeal: true

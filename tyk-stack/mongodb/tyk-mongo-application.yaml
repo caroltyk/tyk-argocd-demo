@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: mongo
   namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "20"
 spec:
   destination:
     server: https://kubernetes.default.svc
@@ -12,5 +14,5 @@ spec:
     repoURL: https://charts.bitnami.com/bitnami
     targetRevision: 15.1.3
   syncPolicy:
-    automated: 
+    automated:
       prune: true
