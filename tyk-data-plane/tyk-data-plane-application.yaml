@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-dp
+  name: tyk-data-plane
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "20"
