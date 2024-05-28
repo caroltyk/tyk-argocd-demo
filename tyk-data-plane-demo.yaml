@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-data-plane-app
+  name: tyk-data-plane-demo
   namespace: argocd
   finalizers:
     # The default behaviour is foreground cascading deletion
