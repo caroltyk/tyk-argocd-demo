@@ -8,7 +8,7 @@ metadata:
 spec:
   project: infrastructure
   source:
-    path: tyk-stack
+    path: tyk-stack/mongodb
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
     kustomize:
