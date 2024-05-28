@@ -11,7 +11,7 @@ metadata:
 spec:
   project: infrastructure
   source:
-    path: tyk-hybrid-data-plane
+    path: tyk-hybrid-data-plane/jupiter-production
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
     kustomize:

@@ -11,26 +11,13 @@ metadata:
 spec:
   project: infrastructure
   source:
-    path: tyk-hybrid-data-plane
+    path: tyk-hybrid-data-plane/jupiter-staging
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
     kustomize:
       commonLabels:
         tyk.io/argocd-demo: tyk-hybrid-staging-demo
-      resources:
-        - cert-issuer.yaml
-        - redis-application.yaml
-        - tyk-hybrid-application.yaml
-        - tyk-hybrid-stg-sealedsecrets.yaml
-        - tyk-operator-ctx.yaml
       patches:
-        - target:
-            kind: Application
-            name: tyk-hybrid-dp
-          patch: |-
-            - op: "replace"
-              path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
-              value: "rural-gander-hyb.aws-euw2.cloud-ara.tyk.io:443"
         - target:
             kind: Application
           patch: |-
