@@ -42,25 +42,16 @@ spec:
               keyName: postgresUrl
           mdcbSynchronizer:
             enabled: true
-        tyk-bootstrap:
-          bootstrap:
-            jobs:
-              postInstall:
-                extraEnvs: []
-        #        - name: TYK_K8SBOOTSTRAP_TYK_ORG_ID
-        #          value: 663ccd8cf05df70001366fdb
-        #        - name: TYK_K8SBOOTSTRAP_TYK_ADMIN_AUTH
-        #          value: af882300de4344fb5cc2e2ae49bd8293
         tyk-dashboard:
           dashboard:
-            hostName: tyk-dashboard.org
+            hostName: tyk-cp-dashboard.org
             tib:
               enabled: "true"
             ingress:
               enabled: "true"
               className: nginx
               hosts:
-                - host: tyk-dashboard.org
+                - host: tyk-cp-dashboard.org
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
@@ -112,14 +103,14 @@ spec:
                   - ALL
         tyk-dev-portal:
           useSecretName: tyk-dev-portal-secret
-          hostName: tyk-dev-portal.org
+          hostName: tyk-cp-dev-portal.org
           image:
             tag: v1.9.0
           ingress:
             enabled: "true"
             className: nginx
             hosts:
-              - host: tyk-dev-portal.org
+              - host: tyk-cp-dev-portal.org
                 paths:
                   - path: /
                     pathType: ImplementationSpecific

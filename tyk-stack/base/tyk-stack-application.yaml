@@ -64,14 +64,14 @@ spec:
               annotations:
                 cert-manager.io/issuer: letsencrypt-nginx
               hosts:
-                - host: tyk-stack-gw.159.65.212.135.nip.io
+                - host: tyk-gw.org
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
               tls:
                 - secretName: letsencrypt-nginx
                   hosts:
-                    - "tyk-stack-gw.159.65.212.135.nip.io"
+                    - "tyk-gw.org"
             opentelemetry:
               enabled: "true"
               endpoint: "opentelemetry-collector.monitoring.svc:4317"
@@ -112,14 +112,14 @@ spec:
               annotations:
                 cert-manager.io/issuer: letsencrypt-nginx
               hosts:
-                - host: tyk-stack-dashboard.159.65.212.135.nip.io
+                - host: tyk-dashboard.org
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
               tls:
                 - secretName: letsencrypt-nginx
                   hosts:
-                    - "tyk-stack-dashboard.159.65.212.135.nip.io"
+                    - "tyk-dashboard.org"
             tib:
               enabled: true
             extraEnvs:
@@ -140,11 +140,17 @@ spec:
           ingress:
             enabled: true
             className: "nginx"
+            annotations:
+              cert-manager.io/issuer: letsencrypt-nginx
             hosts:
-              - host: tyk-stack-dev-portal.org
+              - host: tyk-dev-portal.org
                 paths:
                   - path: /
                     pathType: ImplementationSpecific
+            tls:
+              - secretName: letsencrypt-nginx
+                hosts:
+                  - "tyk-dev-portal.org"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
