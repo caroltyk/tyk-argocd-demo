@@ -10,6 +10,20 @@ patches:
       - op: "replace"
         path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
         value: "rural-gander-hyb.aws-euw2.cloud-ara.tyk.io:443"
+      - op: "replace"
+        path: "/metadata/name"
+        value: "tyk-hybrid-dp-stg"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/global/redis/addrs"
+        value: 
+          - "redis-hybrid-dp-stg-master:6379"
+  - target:
+      kind: Application
+      name: redis-hybrid-dp
+    patch: |-
+      - op: "replace"
+        path: "/metadata/name"
+        value: "redis-hybrid-dp-stg"
   - target:
       kind: Application
     patch: |-
