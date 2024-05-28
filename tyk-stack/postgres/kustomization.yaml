@@ -1,7 +1,9 @@
 resources:
   - ../base/
+  - tyk-postgres-application.yaml
+  - postgres-sealedsecrets.yaml
+  - tyk-stack-sealedsecrets.yaml  
   - tyk-stack-postgres-sealedsecrets.yaml
-  - tyk-mongo-application.yaml
 patches:
   - patch: |-
       apiVersion: argoproj.io/v1alpha1
@@ -14,13 +16,14 @@ patches:
           helm:
             valuesObject:
               global:
-                mongo:
-                  driver: mongo-go
-                  mongoURL: mongodb://mongo-mongodb:27017/tyk_analytics
-                storageType: mongo
+                postgres:
+                  connectionStringSecret:
+                    name: postgres-secrets
+                    keyName: postgresUrl
+                storageType: postgres
               tyk-pump:
                 pump:
                   backend:
                     - "prometheus"
-                    - "mongo"
-                  uptimePumpBackend: "mongo"
+                    - "postgres"
+                  uptimePumpBackend: "postgres"
