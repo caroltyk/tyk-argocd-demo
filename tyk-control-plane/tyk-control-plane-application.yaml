@@ -24,8 +24,8 @@ spec:
         global:
           components:
             bootstrap: true
-            devPortal: true
-            operator: false
+            pump: false
+            devPortal: false
           adminUser:
             useSecretName: admin-secrets
           secrets:
