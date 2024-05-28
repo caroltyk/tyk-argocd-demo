@@ -13,7 +13,7 @@ patches:
       - op: "replace"
         path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts"
         value: 
-          - host: "tyk-hybrid-dp.org"
+          - host: "jupiter.org"
             paths:
               - path: /
                 pathType: ImplementationSpecific
@@ -22,4 +22,4 @@ patches:
         value: 
           - secretName: letsencrypt-nginx
             hosts:
-              - "tyk-hybrid-dp.org"
+              - "jupiter.org"

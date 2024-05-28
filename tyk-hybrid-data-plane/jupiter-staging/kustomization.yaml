@@ -18,11 +18,18 @@ patches:
         value: 
           - "redis-hybrid-dp-stg-master:6379"
       - op: "replace"
-        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts[0]/host"
-        value: "tyk-jupiter-stg-dp.org"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts"
+        value: 
+          - host: "jupiter-stg.org"
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
       - op: "replace"
-        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/tls[0]/hosts[0]"
-        value: "tyk-jupiter-stg-dp.org"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/tls"
+        value: 
+          - secretName: letsencrypt-nginx
+            hosts:
+              - "jupiter-stg.org"
   - target:
       kind: Application
       name: redis-hybrid-dp
