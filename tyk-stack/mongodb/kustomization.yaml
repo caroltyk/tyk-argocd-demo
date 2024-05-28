@@ -1,11 +1,13 @@
 resources:
   - ../base/
-  - ../tyk-mongo-application.yaml
+  - tyk-mongo-application.yaml
 patches:
   - patch: |-
+      apiVersion: argoproj.io/v1alpha1
       kind: Application
       metadata:
         name: tyk-stack
+        namespace: argocd
       spec:
         source:
           helm:
