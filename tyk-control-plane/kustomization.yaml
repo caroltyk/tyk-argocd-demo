@@ -2,9 +2,10 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
+- cert-issuer.yaml
 - mdcb-tls-cert.yaml
 - postgres-application.yaml
 - redis-application.yaml
-- tyk-control-plane-sealedsecrets.yaml
 - tyk-control-plane-application.yaml
+- tyk-control-plane-sealedsecrets.yaml
 - tyk-operator-ctx.yaml

@@ -45,16 +45,22 @@ spec:
         tyk-dashboard:
           dashboard:
             hostName: tyk-cp-dashboard.org
-            tib:
-              enabled: "true"
             ingress:
               enabled: "true"
               className: nginx
+              annotations:
+                cert-manager.io/issuer: letsencrypt-nginx
               hosts:
                 - host: tyk-cp-dashboard.org
                   paths:
                     - path: /
                       pathType: ImplementationSpecific
+              tls:
+                - secretName: letsencrypt-nginx
+                  hosts:
+                    - "tyk-dashboard.org"
+            tib:
+              enabled: "true"
             extraEnvs:
               - name: TYK_DB_SECURITY_OPENPOLICY_ENABLED
                 value: "true"
@@ -102,18 +108,24 @@ spec:
                 drop:
                   - ALL
         tyk-dev-portal:
-          useSecretName: tyk-dev-portal-secret
+          useSecretName: "tyk-dev-portal-secret"
           hostName: tyk-cp-dev-portal.org
           image:
             tag: v1.9.0
           ingress:
             enabled: "true"
             className: nginx
+            annotations:
+              cert-manager.io/issuer: letsencrypt-nginx
             hosts:
               - host: tyk-cp-dev-portal.org
                 paths:
                   - path: /
                     pathType: ImplementationSpecific
+            tls:
+              - secretName: letsencrypt-nginx
+                hosts:
+                  - "tyk-cp-dev-portal.org"
         tyk-operator:
           image:
             tag: "v0.17.1"

@@ -33,7 +33,6 @@ spec:
             useDefaultTykCertificate: false
           secrets:
             useSecretName: my-secrets
-            devPortal: "tyk-dev-portal-conf"
           redis:
             addrs:
               - redis-master:6379
@@ -124,6 +123,12 @@ spec:
               enabled: true
             extraEnvs:
               - name: TYK_DB_USESHARDEDANLAYTICS
+                value: "true"
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLED
+                value: "true"
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLEAPI
+                value: "true"
+              - name: TYK_DB_SECURITY_ALLOWADMINRESETPASSWORD
                 value: "true"
             extraVolumes:
               - name: self-signed-ca
