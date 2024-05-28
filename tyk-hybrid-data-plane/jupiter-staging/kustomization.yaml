@@ -18,21 +18,11 @@ patches:
         value: 
           - "redis-hybrid-dp-stg-master:6379"
       - op: "replace"
-        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress"
-        value: 
-          enabled: "true"
-          className: "nginx"
-          annotations:
-            cert-manager.io/issuer: letsencrypt-nginx
-          hosts:
-            - host: "tyk-jupiter-stg-dp.org"
-              paths:
-                - path: /
-                  pathType: ImplementationSpecific
-          tls:
-            - secretName: letsencrypt-nginx
-              hosts:
-                - "tyk-jupiter-stg-dp.org"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts[0]/host"
+        value: "tyk-jupiter-stg-dp.org"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/tls[0]/hosts[0]"
+        value: "tyk-jupiter-stg-dp.org"
   - target:
       kind: Application
       name: redis-hybrid-dp
