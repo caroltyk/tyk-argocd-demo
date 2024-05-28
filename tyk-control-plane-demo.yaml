@@ -30,6 +30,18 @@ spec:
             - op: "replace"
               path: "/spec/secretRef/namespace"
               value: "tyk-cp"
+        - target:
+            kind: Certificate
+            name: mdcb-tls-cert
+          patch: |-
+            - op: "replace"
+              path: "/spec/commonName"
+              value: "*.tyk-cp.svc"
+            - op: "replace"
+              path: "/spec/dnsNames"
+              value:
+                - "*.tyk-cp.svc"
+                - "*.tyk-cp.svc.cluster.local"
   destination:
     name: in-cluster
     namespace: tyk-cp
