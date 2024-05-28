@@ -9,7 +9,7 @@ patches:
     patch: |-
       - op: "replace"
         path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
-        value: "relevant-oven-adm.aws-euw2.cloud-ara.tyk.io:443"
+        value: "relevant-oven-hyb.aws-euw2.cloud-ara.tyk.io:443"
       - op: "replace"
         path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts"
         value: 
