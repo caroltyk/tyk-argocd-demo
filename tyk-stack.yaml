@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: tyk-stack-mongo-demo
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   project: infrastructure
   source:
@@ -31,5 +29,4 @@ spec:
     syncOptions:
     - CreateNamespace=true
     automated:
-      prune: true
       selfHeal: true

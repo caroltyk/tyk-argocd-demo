@@ -1,5 +1,5 @@
 resources:
-  - ../
+  - ../base/
   - ../tyk-mongo-application.yaml
 patches:
   - patch: |-
