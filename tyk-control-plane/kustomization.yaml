@@ -3,8 +3,8 @@ kind: Kustomization
 
 resources:
 - mdcb-tls-cert.yaml
-- postgres.yaml
-- redis.yaml
+- postgres-application.yaml
+- redis-application.yaml
 - tyk-control-plane-sealedsecrets.yaml
-- tyk-cp.yaml
+- tyk-control-plane-application.yaml
 - tyk-operator-ctx.yaml

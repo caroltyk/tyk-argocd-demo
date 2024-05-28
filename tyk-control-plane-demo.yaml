@@ -33,9 +33,9 @@ spec:
   destination:
     name: in-cluster
     namespace: tyk-cp
-    info:
-      - name: 'Deploy Tyk MDCB control plane demo with PostgreSQL backend'
-        value: 'https://tyk.io'
+  info:
+    - name: 'Deploy Tyk MDCB control plane demo with PostgreSQL backend'
+      value: 'https://tyk.io'
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

@@ -7,8 +7,8 @@ metadata:
     argocd.argoproj.io/sync-wave: "50"
 spec:
   destination:
-    namespace: tyk-cp
     server: https://kubernetes.default.svc
+    namespace: tyk-cp
   project: infrastructure
   source:
     chart: redis

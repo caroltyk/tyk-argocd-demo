@@ -8,6 +8,7 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
+    namespace: tyk-cp
   project: infrastructure
   source:
     chart: postgresql
