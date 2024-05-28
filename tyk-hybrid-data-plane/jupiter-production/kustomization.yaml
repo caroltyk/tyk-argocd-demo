@@ -11,8 +11,15 @@ patches:
         path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
         value: "relevant-oven-adm.aws-euw2.cloud-ara.tyk.io:443"
       - op: "replace"
-        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts[0]/host"
-        value: "tyk-jupiter-prod-dp.org"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/hosts"
+        value: 
+          - host: "tyk-hybrid-dp.org"
+            paths:
+              - path: /
+                pathType: ImplementationSpecific
       - op: "replace"
-        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/tls[0]/hosts[0]"
-        value: "tyk-jupiter-prod-dp.org"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress/tls"
+        value: 
+          - secretName: letsencrypt-nginx
+            hosts:
+              - "tyk-hybrid-dp.org"
