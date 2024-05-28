@@ -24,6 +24,15 @@ spec:
             - op: "add"
               path: "/spec/destination/namespace"
               value: "tyk-mongo"
+        - target:
+            kind: SealedSecret
+          patch: |-
+            - op: "replace"
+              path: "/spec/template/metadata/namespace"
+              value: "tyk-mongo"
+            - op: "replace"
+              path: "/metadata/namespace"
+              value: "tyk-mongo"
   destination:
     name: in-cluster
     namespace: tyk-mongo
