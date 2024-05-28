@@ -14,7 +14,6 @@ spec:
     kustomize:
       commonLabels:
         tyk.io/argocd-demo: tyk-stack-mongo-demo
-      namespace: tyk-stack
       patches:
         - target:
             kind: Application
