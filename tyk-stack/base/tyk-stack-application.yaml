@@ -15,9 +15,9 @@ spec:
       valuesObject:
         global:
           components:
-            bootstrap: false
+            bootstrap: true
             pump: true
-            devPortal: true
+            devPortal: false
           adminUser:
             useSecretName: admin-secrets
           tls:
