@@ -22,7 +22,7 @@ spec:
             useSecretName: my-secrets
           remoteControlPlane:
             useSecretName: mdcb-connection-secret
-            connectionString: "rural-gander-hyb.aws-euw2.cloud-ara.tyk.io:443"
+            connectionString: "relevant-oven-adm.aws-euw2.cloud-ara.tyk.io:443"
             useSSL: true
             sslInsecureSkipVerify: true
           redis:

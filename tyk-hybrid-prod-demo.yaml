@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-hybrid-staging-demo
+  name: tyk-hybrid-prod-demo
   namespace: argocd
   finalizers:
     # The default behaviour is foreground cascading deletion
@@ -16,29 +16,22 @@ spec:
     targetRevision: HEAD
     kustomize:
       commonLabels:
-        tyk.io/argocd-demo: tyk-hybrid-staging-demo
+        tyk.io/argocd-demo: tyk-hybrid-prod-demo
       patches:
-        - target:
-            kind: Application
-            name: tyk-hybrid-dp
-          patch: |-
-            - op: "replace"
-              path: "/spec/source/helm/valuesObject/global/remoteControlPlane/connectionString"
-              value: "rural-gander-hyb.aws-euw2.cloud-ara.tyk.io:443"
         - target:
             kind: Application
           patch: |-
             - op: "replace"
               path: "/spec/destination/namespace"
-              value: "tyk-hybrid-stg"
+              value: "tyk-hybrid"
         - target:
             kind: OperatorContext
           patch: |-
             - op: "replace"
               path: "/spec/secretRef/namespace"
-              value: "tyk-hybrid-stg"
+              value: "tyk-hybrid"
   destination:
-    namespace: tyk-hybrid-stg
+    namespace: tyk-hybrid
     server: https://kubernetes.default.svc
   syncPolicy:
     managedNamespaceMetadata:
