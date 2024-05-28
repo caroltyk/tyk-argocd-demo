@@ -4,17 +4,38 @@ metadata:
   name: tyk-data-plane-app
   namespace: argocd
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
 spec:
-  destination:
-    namespace: tyk-dp
-    server: https://kubernetes.default.svc
+  project: infrastructure
   source:
     path: tyk-data-plane
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-  project: infrastructure
+    kustomize:
+      commonLabels:
+        tyk.io/argocd-demo: tyk-data-plane-demo
+      patches:
+        - target:
+            kind: Application
+          patch: |-
+            - op: "replace"
+              path: "/spec/destination/namespace"
+              value: "tyk-dp"
+  destination:
+    namespace: tyk-dp
+    server: https://kubernetes.default.svc
   syncPolicy:
+    managedNamespaceMetadata:
+      labels: # The labels to set on the application namespace
+        pod-security.kubernetes.io/enforce: restricted
+        pod-security.kubernetes.io/enforce-version: latest
+        pod-security.kubernetes.io/warn: restricted
+        pod-security.kubernetes.io/warn-version: latest
+    syncOptions:
+      - CreateNamespace=true
     automated:
       prune: true
       selfHeal: false
