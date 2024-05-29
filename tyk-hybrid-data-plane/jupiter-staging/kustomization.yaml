@@ -30,6 +30,12 @@ patches:
           - secretName: letsencrypt-nginx
             hosts:
               - "jupiter-stg.org"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/sharding/enabled"
+        value: "true"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/sharding/tags"
+        value: "staging"
   - target:
       kind: Application
       name: redis-hybrid-dp

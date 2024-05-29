@@ -23,3 +23,9 @@ patches:
           - secretName: letsencrypt-nginx
             hosts:
               - "jupiter.org"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/sharding/enabled"
+        value: "true"
+      - op: "replace"
+        path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/sharding/tags"
+        value: "production"

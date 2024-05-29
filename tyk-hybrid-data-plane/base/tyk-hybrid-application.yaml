@@ -40,6 +40,9 @@ spec:
             enabled: true
         tyk-gateway:
           gateway:
+            sharding:
+              enabled: "false"
+              tags: ""
             opentelemetry:
               enabled: "true"
               endpoint: "opentelemetry-collector.monitoring.svc:4317"
