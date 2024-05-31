@@ -1,0 +1,38 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-oss-demo
+  namespace: argocd
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
+spec:
+  project: infrastructure
+  source:
+    path: tyk-oss/base
+    repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+    targetRevision: HEAD
+    kustomize:
+      commonLabels:
+        tyk.io/argocd-demo: tyk-oss-demo
+      patches:
+        - target:
+            kind: Application
+          patch: |-
+            - op: "add"
+              path: "/spec/destination/namespace"
+              value: "tyk-oss"
+  destination:
+    namespace: tyk-oss
+    server: https://kubernetes.default.svc
+  info:
+    - name: 'Deploy Tyk OSS demo'
+      value: 'https://tyk.io'
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: true
+      selfHeal: true

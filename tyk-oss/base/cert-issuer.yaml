@@ -2,9 +2,8 @@ apiVersion: cert-manager.io/v1
 kind: Issuer
 metadata:
   name: letsencrypt-nginx
-  namespace: tyk-oss
   annotations:
-    argocd.argoproj.io/sync-wave: "10"
+    argocd.argoproj.io/sync-wave: "5"
 spec:
   # ACME issuer configuration
   # `email` - the email address to be associated with the ACME account (make sure it's a valid one)

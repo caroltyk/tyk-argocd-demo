@@ -1,13 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-oss
+  name: redis-oss
   namespace: argocd
   annotations:
-    argocd.argoproj.io/sync-wave: "50"
+    argocd.argoproj.io/sync-wave: "20"
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
 spec:
   destination:
-    namespace: tyk-oss
     server: https://kubernetes.default.svc
   project: infrastructure
   source:
