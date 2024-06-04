@@ -45,32 +45,8 @@ spec:
           storageType: mongo
         tyk-gateway:
           gateway:
-            hostName: tyk-stack-gw.org
-            #tls:
-            #  secretName: tyk-stack-gw-tls-secret
-            #  insecureSkipVerify: false
-            #  certificatesMountPath: "/etc/certs/tyk-gateway"
-            #  # certificates is an array of strings, used to set TYK_GW_HTTPSERVEROPTIONS_CERTIFICATES
-            #  certificates:
-            #    - domain_name: "*"
-            #      cert_file: "/etc/certs/tyk-gateway/tls.crt"
-            #      key_file: "/etc/certs/tyk-gateway/tls.key"
             control:
               enabled: true
-            ingress:
-              enabled: "true"
-              className: nginx
-              annotations:
-                cert-manager.io/issuer: letsencrypt-nginx
-              hosts:
-                - host: tyk-gw.org
-                  paths:
-                    - path: /
-                      pathType: ImplementationSpecific
-              tls:
-                - secretName: letsencrypt-nginx
-                  hosts:
-                    - "tyk-gw.org"
             opentelemetry:
               enabled: "true"
               endpoint: "opentelemetry-collector.monitoring.svc:4317"
@@ -82,9 +58,6 @@ spec:
               - name: self-signed-ca
                 mountPath: "/etc/ssl/certs/trust-bundle.pem"
                 subPath: trust-bundle.pem
-        tyk-bootstrap:
-          bootstrap:
-            sslInsecureSkipVerify: true
         tyk-pump:
           pump:
             backend:
@@ -96,29 +69,6 @@ spec:
                 enabled: true
         tyk-dashboard:
           dashboard:
-            useShardedAnalytics: true
-            #tls:
-            #  secretName: tyk-stack-dashboard-tls-secret
-            #  insecureSkipVerify: false
-            #  certificatesMountPath: "/etc/certs/tyk-dashboard"
-            #  certificates:
-            #    - domain_name: "*"
-            #      cert_file: "/etc/certs/tyk-dashboard/tls.crt"
-            #      key_file: "/etc/certs/tyk-dashboard/tls.key"
-            ingress:
-              enabled: "true"
-              className: nginx
-              annotations:
-                cert-manager.io/issuer: letsencrypt-nginx
-              hosts:
-                - host: tyk-dashboard.org
-                  paths:
-                    - path: /
-                      pathType: ImplementationSpecific
-              tls:
-                - secretName: letsencrypt-nginx
-                  hosts:
-                    - "tyk-dashboard.org"
             tib:
               enabled: true
             extraEnvs:
@@ -134,28 +84,12 @@ spec:
               - name: self-signed-ca
                 secret:
                   secretName: my-bundle
-            extraVolumeMounts: 
+            extraVolumeMounts:
               - name: self-signed-ca
                 mountPath: "/etc/ssl/certs/trust-bundle.pem"
                 subPath: trust-bundle.pem
         tyk-dev-portal:
           useSecretName: "tyk-dev-portal-secret"
-          image:
-            tag: v1.9.0
-          ingress:
-            enabled: true
-            className: "nginx"
-            annotations:
-              cert-manager.io/issuer: letsencrypt-nginx
-            hosts:
-              - host: tyk-dev-portal.org
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-            tls:
-              - secretName: letsencrypt-nginx
-                hosts:
-                  - "tyk-dev-portal.org"
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
