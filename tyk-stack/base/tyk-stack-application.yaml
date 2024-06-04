@@ -46,7 +46,7 @@ spec:
         tyk-gateway:
           gateway:
             control:
-              enabled: true
+              enabled: "true"
             opentelemetry:
               enabled: "true"
               endpoint: "opentelemetry-collector.monitoring.svc:4317"
@@ -66,11 +66,11 @@ spec:
             uptimePumpBackend: "mongo"
             prometheusPump:
               prometheusOperator:
-                enabled: true
+                enabled: "true"
         tyk-dashboard:
           dashboard:
             tib:
-              enabled: true
+              enabled: "true"
             extraEnvs:
               - name: TYK_DB_USESHARDEDANLAYTICS
                 value: "true"
