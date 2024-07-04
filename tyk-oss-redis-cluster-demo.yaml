@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-control-plane-demo
+  name: tyk-oss-redis-cluster-demo
   namespace: argocd
   finalizers:
     # The default behaviour is foreground cascading deletion
@@ -9,23 +9,15 @@ metadata:
     # Alternatively, you can use background cascading deletion
     # - resources-finalizer.argocd.argoproj.io/background
 spec:
-  project: infrastructure
+  destination:
+    namespace: tyk-oss
+    server: https://kubernetes.default.svc
   source:
-    path: tyk-control-plane
+    path: tyk-oss/overlays/redis-cluster
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-    kustomize:
-      commonLabels:
-        tyk.io/argocd-demo: tyk-control-plane-demo
-  destination:
-    name: in-cluster
-    namespace: tyk-cp
-  info:
-    - name: 'Deploy Tyk MDCB control plane demo with PostgreSQL backend'
-      value: 'https://tyk.io'
+  project: infrastructure
   syncPolicy:
-    syncOptions:
-    - CreateNamespace=true
     automated:
       prune: true
-      selfHeal: true
+      selfHeal: false

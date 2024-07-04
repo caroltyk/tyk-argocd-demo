@@ -10,5 +10,5 @@ resources:
 - ../../base/sealedsecret-tyk-oss.yaml
 - ../../base/tyk-cert.yaml
 - ../../base/tyk-oss.yaml
-patchesStrategicMerge:
+patches:
 - tyk-oss.yaml
