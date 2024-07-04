@@ -14,9 +14,6 @@ spec:
     path: tyk-control-plane
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-    kustomize:
-      commonLabels:
-        tyk.io/argocd-demo: tyk-control-plane-demo
   destination:
     name: in-cluster
     namespace: tyk-cp
