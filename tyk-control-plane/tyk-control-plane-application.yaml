@@ -23,7 +23,7 @@ spec:
       valuesObject:
         global:
           components:
-            bootstrap: true
+            bootstrap: false
             pump: false
             devPortal: false
             operator: false
