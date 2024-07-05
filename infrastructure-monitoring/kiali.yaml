@@ -114,7 +114,22 @@ data:
       prometheus:
         url: "http://prometheus-stack-kube-prom-prometheus.monitoring:9090/"
       grafana:
-        url: "http://prometheus-stack-grafana.monitoring:80/"
+        enabled: true
+        in_cluster_url: "http://prometheus-stack-grafana.monitoring:80/"
+        url: "http://k8s-grafana.org"
+        dashboards:
+        - name: "Istio Service Dashboard"
+          variables:
+            namespace: "var-namespace"
+            service: "var-service"
+        - name: "Istio Workload Dashboard"
+          variables:
+            namespace: "var-namespace"
+            workload: "var-workload"
+        - name: "Istio Mesh Dashboard"
+        - name: "Istio Control Plane Dashboard"
+        - name: "Istio Performance Dashboard"
+        - name: "Istio Wasm Extension Dashboard"
     identity:
       cert_file: ""
       private_key_file: ""
