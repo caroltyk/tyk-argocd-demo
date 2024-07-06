@@ -1,0 +1,110 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-stack
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: "50"
+  finalizers:
+    # The default behaviour is foreground cascading deletion
+    - resources-finalizer.argocd.argoproj.io
+    # Alternatively, you can use background cascading deletion
+    # - resources-finalizer.argocd.argoproj.io/background
+spec:
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: tyk
+  project: infrastructure
+  source:
+    chart: tyk-stack
+    repoURL: https://helm.tyk.io/public/helm/charts
+    targetRevision: 1.5.0
+    helm:
+      valuesObject:
+        global:
+          components:
+            bootstrap: true
+            pump: true
+            devPortal: true
+            operator: false
+          adminUser:
+            firstName: Default User
+            lastName: Demo
+            email: default@demo.com
+            password: topsecretpassword
+          secrets:
+            useSecretName: tyk-conf
+          redis:
+            addrs:
+              - redis-master:6379
+            pass: topsecretpassword
+          postgres:
+            host: postgres-postgresql
+            port: 5432
+            user: postgres
+            password: topsecretpassword
+            database: tyk_analytics
+            sslmode: disable
+          storageType: postgres
+        tyk-gateway:
+          gateway:
+            opentelemetry:
+              enabled: "true"
+              endpoint: "opentelemetry-collector.monitoring.svc:4317"
+            ingress:
+              enabled: true
+              className: "nginx"
+              annotations: {}
+              hosts:
+                - host: tyk-gw.org
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+              tls: []
+        tyk-pump:
+          pump:
+            backend:
+              - "prometheus"
+              - "postgres"
+            uptimePumpBackend: "postgres"
+            prometheusPump:
+              prometheusOperator:
+                enabled: "true"
+        tyk-dashboard:
+          dashboard:
+            tib:
+              enabled: "true"
+            extraEnvs:
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLED
+                value: "true"
+              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLEAPI
+                value: "true"
+              - name: TYK_DB_SECURITY_ALLOWADMINRESETPASSWORD
+                value: "true"
+            ingress:
+              enabled: true
+              className: "nginx"
+              annotations: {}
+              hosts:
+                - host: tyk-dashboard.org
+                  paths:
+                    - path: /
+                      pathType: ImplementationSpecific
+              tls: []
+        tyk-dev-portal:
+          useSecretName: "tyk-conf"
+          ingress:
+            enabled: true
+            className: "nginx"
+            annotations: {}
+            hosts:
+              - host: tyk-dev-portal.org
+                paths:
+                  - path: /
+                    pathType: ImplementationSpecific
+            tls: []
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+    automated:
+      prune: false

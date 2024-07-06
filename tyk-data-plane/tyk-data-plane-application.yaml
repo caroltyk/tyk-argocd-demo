@@ -18,77 +18,15 @@ spec:
   source:
     chart: tyk-data-plane
     repoURL: https://helm.tyk.io/public/helm/charts
-    targetRevision: 1.4.0
+    targetRevision: 1.5.0
     helm:
-      valuesObject:
-        global:
-          secrets:
-            useSecretName: my-secrets
-          remoteControlPlane:
-            useSecretName: mdcb-connection-secret
-            connectionString: "mdcb-svc-tyk-control-plane-tyk-mdcb.tyk-cp.svc:9091"
-            useSSL: true
-            sslInsecureSkipVerify: false
-          redis:
-            addrs:
-              - redis-dp-master:6379
-            passSecret:
-              name: "redis-password-secret"
-              keyName: "redis-password"
-          mdcbSynchronizer:
-            enabled: true
-        tyk-gateway:
-          gateway:
-            opentelemetry:
-              enabled: "true"
-              endpoint: "opentelemetry-collector.monitoring.svc:4317"
-            ingress:
-              enabled: "true"
-              className: "nginx"
-              annotations:
-                cert-manager.io/issuer: letsencrypt-nginx
-              hosts:
-                - host: "tyk-dp-gw.org"
-                  paths:
-                    - path: /
-                      pathType: ImplementationSpecific
-              tls:
-                - secretName: letsencrypt-nginx
-                  hosts:
-                    - "tyk-dp-gw.org"
-            extraVolumes:
-              - name: self-signed-ca
-                secret:
-                  secretName: my-bundle
-            extraVolumeMounts: 
-              - name: self-signed-ca
-                mountPath: "/etc/ssl/certs/trust-bundle.pem"
-                subPath: trust-bundle.pem
-        tyk-pump:
-          pump:
-            securityContext:
-              seccompProfile:
-                type: RuntimeDefault
-            containerSecurityContext:
-              allowPrivilegeEscalation: false
-              capabilities:
-                drop:
-                  - "ALL"
-            # hybridPump:
-            #  enableAggregateAnalytics: false
-            prometheusPump:
-              prometheusOperator:
-                enabled: true
-                podMonitorSelector:
-                  release: prometheus-stack
-            extraVolumes:
-              - name: self-signed-ca
-                secret:
-                  secretName: my-bundle
-            extraVolumeMounts: 
-              - name: self-signed-ca
-                mountPath: "/etc/ssl/certs/trust-bundle.pem"
-                subPath: trust-bundle.pem
+      valueFiles:
+      - $values/tyk-data-plane-values.yaml
+  sources:
+    - path: valueFiles
+      repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+      targetRevision: HEAD
+      ref: values
   syncPolicy:
     automated:
       prune: true

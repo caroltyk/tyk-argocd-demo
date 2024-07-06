@@ -11,63 +11,9 @@ metadata:
 spec:
   project: infrastructure
   source:
-    path: tyk-stack/mongodb
+    path: tyk-stack-mongo
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-    kustomize:
-      commonLabels:
-        tyk.io/argocd-demo: tyk-stack-mongo-demo
-      patches:
-        - target:
-            kind: Application
-          patch: |-
-            - op: "add"
-              path: "/spec/destination/namespace"
-              value: "tyk-mongo"
-        - target:
-            kind: Application
-            name: tyk-stack
-          patch: |-
-            - op: "add"
-              path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/image"
-              value: 
-                tag: "v5.3.2-rc1"
-            - op: "add"
-              path: "/spec/source/helm/valuesObject/tyk-dashboard/dashboard/image"
-              value: 
-                tag: "v5.3.2-rc1"
-#            - op: "replace"
-#              path: "/spec/source/helm/valuesObject/tyk-gateway/gateway/ingress"
-#              value: 
-#                enabled: "false"
-#                className: nginx
-#                annotations:
-#                  cert-manager.io/issuer: letsencrypt-nginx
-#                hosts:
-#                  - host: tyk-gw.159.65.212.135.nip.io
-#                    paths:
-#                      - path: /
-#                        pathType: ImplementationSpecific
-#                tls:
-#                  - secretName: letsencrypt-nginx
-#                    hosts:
-#                      - "tyk-gw.159.65.212.135.nip.io"
-#            - op: "replace"
-#              path: "/spec/source/helm/valuesObject/tyk-dashboard/dashboard/ingress"
-#              value: 
-#                enabled: "false"
-#                className: nginx
-#                annotations:
-#                  cert-manager.io/issuer: letsencrypt-nginx
-#                hosts:
-#                  - host: tyk-dashboard.159.65.212.135.nip.io
-#                    paths:
-#                      - path: /
-#                        pathType: ImplementationSpecific
-#                tls:
-#                  - secretName: letsencrypt-nginx
-#                    hosts:
-#                      - "tyk-dashboard.159.65.212.135.nip.io"
   destination:
     name: in-cluster
     namespace: tyk-mongo

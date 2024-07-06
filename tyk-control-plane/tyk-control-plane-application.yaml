@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: tyk-control-plane
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "40"
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
@@ -23,24 +21,29 @@ spec:
       valuesObject:
         global:
           components:
-            bootstrap: false
+            bootstrap: true
             pump: false
             devPortal: false
             operator: false
           adminUser:
-            useSecretName: admin-secrets
+            firstName: Default User
+            lastName: Demo
+            email: default@demo.com
+            password: topsecretpassword
           secrets:
-            useSecretName: my-secrets
+            useSecretName: tyk-cp-conf
           redis:
             addrs:
               - redis-cp-master:6379
-            passSecret:
-              name: redis-password-secret
-              keyName: redis-password
+            pass: topsecretpassword
           postgres:
-            connectionStringSecret:
-              name: postgres-secrets
-              keyName: postgresUrl
+            host: postgres-cp-postgresql
+            port: 5432
+            user: postgres
+            password: topsecretpassword
+            database: tyk_analytics
+            sslmode: disable
+          storageType: postgres
           mdcbSynchronizer:
             enabled: true
         tyk-dashboard:
@@ -69,18 +72,9 @@ spec:
                 value: "true"
               - name: TYK_DB_SECURITY_ALLOWADMINRESETPASSWORD
                 value: "true"
-        tyk-bootstrap:
-          bootstrap:
-            podLabels:
-              preInstallPodLabels:
-                sidecar.istio.io/inject: "false"
-              postInstallPodLabels:
-                sidecar.istio.io/inject: "false"
-              preDeletePodLabels:
-                sidecar.istio.io/inject: "false"
         tyk-mdcb:
           mdcb:
-            useSecretName: mdcb-secrets
+            useSecretName: tyk-cp-conf
             tls:
               # enables ssl for mdcb
               useSSL: "true"
@@ -100,7 +94,7 @@ spec:
               # the name of the volume
               volumeName: "mdcb-tls-secret-volume"
         tyk-dev-portal:
-          useSecretName: "tyk-dev-portal-secret"
+          useSecretName: tyk-cp-conf
           hostName: tyk-cp-dev-portal.org
           ingress:
             enabled: "true"

@@ -21,10 +21,8 @@ spec:
     targetRevision: 19.0.2
     helm:
       parameters:
-      - name: auth.existingSecret
-        value: redis-password-secret
-      - name: auth.existingSecretPasswordKey
-        value: redis-password
+      - name: global.redis.password
+        value: topsecretpassword
   syncPolicy:
     automated: 
       prune: true

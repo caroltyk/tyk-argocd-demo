@@ -11,19 +11,9 @@ metadata:
 spec:
   project: infrastructure
   source:
-    path: tyk-stack/postgres
+    path: tyk-stack-postgres
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-    kustomize:
-      commonLabels:
-        tyk.io/argocd-demo: tyk-stack-psql-demo
-      patches:
-        - target:
-            kind: Application
-          patch: |-
-            - op: "add"
-              path: "/spec/destination/namespace"
-              value: "tyk-postgres"
   destination:
     name: in-cluster
     namespace: tyk-postgres

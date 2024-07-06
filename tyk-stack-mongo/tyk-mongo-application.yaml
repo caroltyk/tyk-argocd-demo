@@ -1,10 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: redis
+  name: mongo
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "20"
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
@@ -13,20 +11,12 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
+    namespace: tyk
   project: infrastructure
   source:
-    chart: redis
+    chart: mongodb
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 19.0.2
-    helm:
-      parameters:
-      - name: auth.existingSecret
-        value: redis-password-secret
-      - name: auth.existingSecretPasswordKey
-        value: redis-password
+    targetRevision: 15.1.3
   syncPolicy:
-    automated: 
+    automated:
       prune: true
-  ignoreDifferences:
-  - kind: PersistentVolumeClaim
-    group: v1

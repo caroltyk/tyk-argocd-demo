@@ -1,10 +1,8 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: postgres-cp
+  name: redis
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "20"
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
@@ -13,18 +11,19 @@ metadata:
 spec:
   destination:
     server: https://kubernetes.default.svc
-    namespace: tyk-cp
+    namespace: tyk
   project: infrastructure
   source:
-    chart: postgresql
+    chart: redis
     repoURL: https://charts.bitnami.com/bitnami
-    targetRevision: 12.12.10
+    targetRevision: 19.0.2
     helm:
       parameters:
-      - name: global.postgresql.auth.database
-        value: "tyk_analytics"
-      - name: global.postgresql.auth.postgresPassword
+      - name: global.redis.password
         value: topsecretpassword
   syncPolicy:
     automated: 
       prune: true
+  ignoreDifferences:
+  - kind: PersistentVolumeClaim
+    group: v1

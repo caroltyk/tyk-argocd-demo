@@ -14,16 +14,6 @@ spec:
     path: tyk-data-plane
     repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
     targetRevision: HEAD
-    kustomize:
-      commonLabels:
-        tyk.io/argocd-demo: tyk-data-plane-demo
-      patches:
-        - target:
-            kind: Application
-          patch: |-
-            - op: "replace"
-              path: "/spec/destination/namespace"
-              value: "tyk-dp"
   destination:
     namespace: tyk-dp
     server: https://kubernetes.default.svc

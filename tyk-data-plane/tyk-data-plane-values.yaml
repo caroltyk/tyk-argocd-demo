@@ -1,0 +1,57 @@
+global:
+  remoteControlPlane:
+    useSecretName: tyk-dp-conf
+    connectionString: "mdcb-svc-tyk-control-plane-tyk-mdcb.tyk-cp:9091"
+    useSSL: true
+    sslInsecureSkipVerify: false
+  redis:
+    addrs:
+      - redis-dp-master:6379
+    pass: topsecretpassword
+  mdcbSynchronizer:
+    enabled: true
+tyk-gateway:
+  gateway:
+    control:
+      enabled: "true"
+    opentelemetry:
+      enabled: "true"
+      endpoint: "opentelemetry-collector.monitoring.svc:4317"
+    ingress:
+      enabled: "true"
+      className: "nginx"
+      annotations:
+        cert-manager.io/issuer: letsencrypt-nginx
+      hosts:
+        - host: "tyk-dp-gw.org"
+          paths:
+            - path: /
+              pathType: ImplementationSpecific
+      tls:
+        - secretName: letsencrypt-nginx
+          hosts:
+            - "tyk-dp-gw.org"
+    extraVolumes:
+      - name: self-signed-ca
+        secret:
+          secretName: my-bundle
+    extraVolumeMounts: 
+      - name: self-signed-ca
+        mountPath: "/etc/ssl/certs/trust-bundle.pem"
+        subPath: trust-bundle.pem
+tyk-pump:
+  pump:
+    customMetrics: '[{"name":"tyk_http_requests_total","description":"Total of API requests","metric_type":"counter","labels":["response_code","api_name","method","api_key","alias","path"]},          {              "name":"tyk_http_latency",              "description":"Latency of API requests",              "metric_type":"histogram",              "labels":["type","response_code","api_name","method","api_key","alias","path"]          }]'
+    prometheusPump:
+      prometheusOperator:
+        enabled: true
+        podMonitorSelector:
+          release: prometheus-stack
+    extraVolumes:
+      - name: self-signed-ca
+        secret:
+          secretName: my-bundle
+    extraVolumeMounts: 
+      - name: self-signed-ca
+        mountPath: "/etc/ssl/certs/trust-bundle.pem"
+        subPath: trust-bundle.pem

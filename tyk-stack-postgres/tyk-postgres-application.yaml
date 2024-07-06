@@ -3,8 +3,6 @@ kind: Application
 metadata:
   name: postgres
   namespace: argocd
-  annotations:
-    argocd.argoproj.io/sync-wave: "20"
   finalizers:
     # The default behaviour is foreground cascading deletion
     - resources-finalizer.argocd.argoproj.io
@@ -12,8 +10,9 @@ metadata:
     # - resources-finalizer.argocd.argoproj.io/background
 spec:
   destination:
-    namespace: postgres
     server: https://kubernetes.default.svc
+    namespace: tyk
+
   project: infrastructure
   source:
     chart: postgresql
@@ -23,10 +22,8 @@ spec:
       parameters:
       - name: auth.database
         value: "tyk_analytics"
-      - name: global.postgresql.auth.existingSecret
-        value: postgres-password
-      - name: global.postgresql.auth.secretKeys.adminPasswordKey
-        value: postgres-password
+      - name: global.postgresql.auth.postgresPassword
+        value: topsecretpassword
   syncPolicy:
-    automated: 
+    automated:
       prune: true
