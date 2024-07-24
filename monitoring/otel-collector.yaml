@@ -15,23 +15,27 @@ spec:
     repoURL: https://open-telemetry.github.io/opentelemetry-helm-charts
     targetRevision: 0.89.0
     helm:
-      parameters:
-      - name: mode
-        value: "daemonset"
-      - name: service.enabled
-        value: "true"
-      - name: "image.repository"
-        value: "otel/opentelemetry-collector-k8s"
-      - name: "command.name"
-        value: "otelcol-k8s"
-      - name: "presets.kubernetesAttributes.enabled"
-        value: "true"
-      - name: "config.exporters.otlp.endpoint"
-        value: "jaeger-all-in-one-collector:4317"
-      - name: "config.exporters.otlp.tls.insecure"
-        value: "true"
-      - name: "config.service.pipelines.traces.exporters"
-        value: "otlp"
+      valuesObject:
+        mode: "daemonset"
+        service:
+          enabled: "true"
+        image:
+          repository: "otel/opentelemetry-collector-k8s"
+        command:
+          name: "otelcol-k8s"
+        presets:
+          kubernetesAttributes:
+            enabled: "true"
+        config:
+          exporters:
+            otlp:
+              endpoint: "jaeger-all-in-one-collector:4317"
+              tls:
+                insecure: "true"
+          service:
+            pipelines:
+              traces:
+                exporters: "otlp"
   syncPolicy:
     syncOptions:
     - ServerSideApply=true
