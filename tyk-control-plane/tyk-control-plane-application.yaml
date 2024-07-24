@@ -13,103 +13,16 @@ spec:
     server: https://kubernetes.default.svc
     namespace: tyk-cp
   project: infrastructure
-  source:
-    chart: tyk-control-plane
-    repoURL: https://helm.tyk.io/public/helm/charts
-    targetRevision: 1.5.0
-    helm:
-      valuesObject:
-        global:
-          components:
-            bootstrap: true
-            pump: false
-            devPortal: false
-            operator: false
-          adminUser:
-            firstName: Default User
-            lastName: Demo
-            email: default@demo.com
-            password: topsecretpassword
-          secrets:
-            useSecretName: tyk-cp-conf
-          redis:
-            addrs:
-              - redis-cp-master:6379
-            pass: topsecretpassword
-          postgres:
-            host: postgres-cp-postgresql
-            port: 5432
-            user: postgres
-            password: topsecretpassword
-            database: tyk_analytics
-            sslmode: disable
-          storageType: postgres
-          mdcbSynchronizer:
-            enabled: true
-        tyk-dashboard:
-          dashboard:
-            hostName: tyk-cp-dashboard.org
-            ingress:
-              enabled: "true"
-              className: nginx
-              annotations:
-                cert-manager.io/issuer: letsencrypt-nginx
-              hosts:
-                - host: tyk-cp-dashboard-159.65.212.135.nip.io
-                  paths:
-                    - path: /
-                      pathType: ImplementationSpecific
-              tls:
-                - secretName: letsencrypt-nginx
-                  hosts:
-                    - "tyk-cp-dashboard-159.65.212.135.nip.io"
-            tib:
-              enabled: "true"
-            extraEnvs:
-              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLED
-                value: "true"
-              - name: TYK_DB_SECURITY_OPENPOLICY_ENABLEAPI
-                value: "true"
-              - name: TYK_DB_SECURITY_ALLOWADMINRESETPASSWORD
-                value: "true"
-        tyk-mdcb:
-          mdcb:
-            useSecretName: tyk-cp-conf
-            tls:
-              # enables ssl for mdcb
-              useSSL: "true"
-              
-              # the path to where the keys will be mounted in the pod
-              certificatesMountPath: "/etc/certs"
-        
-              # location to pem encoded private key
-              certificateKeyFile: "/etc/certs/tls.key"
-        
-              # location to pem encoded certificate
-              certificateCertFile: "/etc/certs/tls.crt"
-        
-              # the name of the secret
-              secretName: "mdcb-tls-secret"
-        
-              # the name of the volume
-              volumeName: "mdcb-tls-secret-volume"
-        tyk-dev-portal:
-          useSecretName: tyk-cp-conf
-          hostName: tyk-cp-dev-portal.org
-          ingress:
-            enabled: "true"
-            className: nginx
-            annotations:
-              cert-manager.io/issuer: letsencrypt-nginx
-            hosts:
-              - host: tyk-cp-dev-portal-159.65.212.135.nip.io
-                paths:
-                  - path: /
-                    pathType: ImplementationSpecific
-            tls:
-              - secretName: letsencrypt-nginx
-                hosts:
-                  - "tyk-cp-dev-portal-159.65.212.135.nip.io"
+  sources:
+    - repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+      targetRevision: HEAD
+      ref: values
+    - chart: tyk-control-plane
+      repoURL: https://helm.tyk.io/public/helm/charts
+      targetRevision: 1.5.0
+      helm:
+        valueFiles:
+        - $values/valueFiles/tyk-control-plane-values.yaml
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

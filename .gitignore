@@ -2,3 +2,4 @@ tyk-secrets/*
 trash/*
 tyk-stack-mongo/tyk-stack-secrets.yaml
 tyk-stack-mongo/sealsecrets.sh
+sample-application.yaml
