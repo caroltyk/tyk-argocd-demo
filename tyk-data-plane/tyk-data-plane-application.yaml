@@ -16,8 +16,7 @@ spec:
     namespace: tyk-dp
   project: infrastructure
   sources:
-    - path: valueFiles
-      repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
+    - repoURL: 'https://github.com/caroltyk/tyk-argocd-demo.git'
       targetRevision: HEAD
       ref: values
     - chart: tyk-data-plane
@@ -25,7 +24,16 @@ spec:
       targetRevision: 1.5.0
       helm:
         valueFiles:
-        - $values/tyk-data-plane-values.yaml
+        - $values/valueFiles/tyk-data-plane-values.yaml
+        #parameters:
+        #- name: "global.remoteControlPlane.useSecretName"
+        #  value: ""
+        #- name: "global.remoteControlPlane.connectionString"
+        #  value: ""
+        #- name: "global.remoteControlPlane.useSSL"
+        #  value: "true"
+        #- name: "global.remoteControlPlane.sslInsecureSkipVerify"
+        #  value: "true"
   syncPolicy:
     automated:
       prune: true
