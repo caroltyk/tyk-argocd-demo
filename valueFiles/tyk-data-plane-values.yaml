@@ -16,7 +16,10 @@ tyk-gateway:
       enabled: "true"
     opentelemetry:
       enabled: "true"
-      endpoint: "opentelemetry-collector.monitoring.svc:4317"
+      exporter: "grpc"
+      endpoint: "opentelemetry-collector.monitoring:4317"
+      sampling:
+        type: "AlwaysOn"
     ingress:
       enabled: "true"
       className: "nginx"
@@ -41,17 +44,20 @@ tyk-gateway:
         subPath: trust-bundle.pem
 tyk-pump:
   pump:
+    service:
+      enabled: true
+      portName: "metrics"
     prometheusPump:
       customMetrics: '[{"name":"tyk_http_requests_total","description":"Total of API requests","metric_type":"counter","labels":["response_code","api_name","method","api_key","alias","path"]},          {              "name":"tyk_http_latency",              "description":"Latency of API requests",              "metric_type":"histogram",              "labels":["type","response_code","api_name","method","api_key","alias","path"]          }]'
       prometheusOperator:
-        enabled: true
+        enabled: false
         podMonitorSelector:
           release: prometheus-stack
     extraVolumes:
       - name: self-signed-ca
         secret:
           secretName: my-bundle
-    extraVolumeMounts: 
+    extraVolumeMounts:
       - name: self-signed-ca
         mountPath: "/etc/ssl/certs/trust-bundle.pem"
         subPath: trust-bundle.pem
