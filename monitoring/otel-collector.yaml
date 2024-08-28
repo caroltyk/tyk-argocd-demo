@@ -16,26 +16,73 @@ spec:
     targetRevision: 0.89.0
     helm:
       valuesObject:
-        mode: "daemonset"
+        mode: "deployment"
         service:
-          enabled: "true"
+          enabled: true
         image:
           repository: "otel/opentelemetry-collector-k8s"
         command:
           name: "otelcol-k8s"
         presets:
           kubernetesAttributes:
-            enabled: "true"
+            enabled: true
+        ports:
+          metrics:
+            enabled: true
+            containerPort: 8888
+            servicePort: 8888
+            protocol: TCP
         config:
+          receivers:
+            otlp:
+              protocols:
+                http:
+                  endpoint: 0.0.0.0:4318
+                  cors:
+                    allowed_origins:
+                      - "http://*"
+                      - "https://*"
+                grpc:
+                  endpoint: 0.0.0.0:4317
           exporters:
             otlp:
               endpoint: "jaeger-all-in-one-collector:4317"
               tls:
-                insecure: "true"
+                insecure: true
+            otlphttp/prometheus:
+              endpoint: "http://prometheus-stack-kube-prom-prometheus:9090/api/v1/otlp"
+              tls:
+                insecure: true
+          connectors:
+            spanmetrics:
+              namespace: tykspan
+              histogram:
+                explicit:
+                  buckets: [100us, 1ms, 2ms, 6ms, 10ms, 100ms, 250ms]
+              dimensions:
+                - name: http.method
+                - name: http.status_code
+                - name: tyk.api.name
+                - name: tyk.gw.id
+                - name: service.version
+          processors:
+            batch: {}
+            transform:
+              error_mode: ignore
+              metric_statements:
+                - context: datapoint
+                  statements:
+                    - replace_all_patterns(attributes, "value", "[^a-zA-Z0-9]", "_")
           service:
             pipelines:
               traces:
-                exporters: "otlp"
+                receivers: [otlp]
+                processors: [batch]
+                exporters: [otlp, spanmetrics]
+              metrics:
+                receivers: [spanmetrics]
+                processors: [transform]
+                exporters: [otlphttp/prometheus]
   syncPolicy:
     syncOptions:
     - ServerSideApply=true

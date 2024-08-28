@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: tyk-data-plane
+  name: tyk-hybrid
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: "50"
@@ -26,14 +26,20 @@ spec:
         valueFiles:
         - $values/valueFiles/tyk-data-plane-values.yaml
         #parameters:
-        #- name: "global.remoteControlPlane.useSecretName"
-        #  value: ""
-        #- name: "global.remoteControlPlane.connectionString"
-        #  value: ""
-        #- name: "global.remoteControlPlane.useSSL"
-        #  value: "true"
-        #- name: "global.remoteControlPlane.sslInsecureSkipVerify"
-        #  value: "true"
+        #  - name: "global.remoteControlPlane.useSecretName"
+        #    value: ""
+        #  - name: "global.remoteControlPlane.userApiKey"
+        #    value: ""
+        #  - name: "global.remoteControlPlane.orgId"
+        #    value: ""
+        #  - name: "global.remoteControlPlane.connectionString"
+        #    value: ""
+        #  - name: "global.remoteControlPlane.useSSL"
+        #    value: "true"
+        #  - name: "global.remoteControlPlane.sslInsecureSkipVerify"
+        #    value: "true"
+        #  - name: "global.remoteControlPlane.groupID"
+        #    value: ""
   syncPolicy:
     automated:
       prune: true
