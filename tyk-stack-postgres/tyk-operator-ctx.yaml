@@ -6,10 +6,4 @@ metadata:
 spec:
   secretRef:
     name: tyk-operator-conf
-  env:
-    mode: pro
-    url: http://dashboard-svc-tyk-stack-tyk-dashboard:3000
-    insecureSkipVerify: true
-    ingress:
-      httpPort: 8000
-      httpsPort: 8443
+    namespace: tyk
