@@ -7,3 +7,5 @@ spec:
   secretRef:
     name: tyk-operator-conf
     namespace: tyk
+  env:
+    insecureSkipVerify: true
