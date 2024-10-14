@@ -26,7 +26,7 @@ spec:
             bootstrap: true
             pump: true
             devPortal: true
-            operator: false
+            operator: true
           adminUser:
             firstName: Default User
             lastName: Demo
