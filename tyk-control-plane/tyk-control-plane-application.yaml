@@ -19,7 +19,7 @@ spec:
       ref: values
     - chart: tyk-control-plane
       repoURL: https://helm.tyk.io/public/helm/charts
-      targetRevision: 1.5.0
+      targetRevision: 2.1.0
       helm:
         valueFiles:
         - $values/valueFiles/tyk-control-plane-values.yaml
